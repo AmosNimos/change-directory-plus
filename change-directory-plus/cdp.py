@@ -15,8 +15,10 @@ debug=""
 
 #cursor location
 global xx
-xx=1
+xx=0
 
+global showContent
+showContent=False;
 
 def start():
 	global path
@@ -40,13 +42,17 @@ def goup():
 def display(xx):
 	#Softwair title
 	#print("~CHANGE DIRECTORY PLUS~")
-	print(colored("Current Directory: ["+str(path)+"]\n",'green'))
+	print(colored("Current directory: ["+str(path)+"]",'red'))
+	if(showContent==True):
+		print(colored("List of content: ["+str(os.listdir(path))+"]",'green'))
+	print("")
+
 	print("--------------------\n")
 	for x in range(xx-2,xx+2):
-		if(x == xx and x<len(grid) and x>0):
+		if(x == xx and x<len(grid) and x>=0):
 			print(colored(" "+str(xx)+" -> ["+str(grid[x])+"]\n",'red'))
 		else:
-			if x<len(grid) and x>0:
+			if x<len(grid) and x>=0:
 				print(colored(" "+str(x)+" ("+str(grid[x])+")\n",'white'))
 			else:
 				print(colored(" - (-)\n",'white'))
@@ -98,7 +104,11 @@ while True:
 		print(debug)
 		os.kill(os.getppid(), signal.SIGHUP)
 		exit()
-	
+
+	#press q
+	if keypress == 'q':
+		showContent= not showContent;
+
 	#press escape
 	if keypress == '\x1b':
 		os.kill(os.getppid(), signal.SIGHUP)
@@ -108,8 +118,8 @@ while True:
 
 	#make the cursor loop around
 	if xx>len(grid)-1:
-		xx=1
-	if xx<1:
+		xx=0
+	if xx<0:
 		xx=len(grid)-1
 
 	#Display directory
