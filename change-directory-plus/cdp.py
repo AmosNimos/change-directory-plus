@@ -71,7 +71,7 @@ while True:
 		#Move the selection up
 		xx-=1;
 
-	#press enter
+	#Go up and down a directory
 	if keypress == 'KEY_RIGHT' or keypress == 'd':
 		#Go down a directory
 		try:
@@ -79,8 +79,6 @@ while True:
 			start()
 		except:
 			debug = "I'm sorry user, I'm afraid I can't acces ["+str(grid[xx])+"]."
-
-	#press space
 	if(keypress == ' '  or keypress == 'KEY_LEFT' or keypress == 'a'):
 		#Go up a directory
 		try:
@@ -91,13 +89,18 @@ while True:
 			debug = "I'm sorry user, I'm afraid I can't acces [ ]."
 		#start()
 
-	#press escape
-	if keypress == '\x1b' or keypress == 'e' or  keypress == '\n':
+	#press enter
+	if keypress == 'e' or  keypress == '\n':
 		#Enter the currently selected directory
 		os.system("gnome-terminal --working-directory="+str(path)+"/"+str(grid[xx]))
 		print(str(path))
 		debug = "Exit"
 		print(debug)
+		os.kill(os.getppid(), signal.SIGHUP)
+		exit()
+	
+	#press escape
+	if keypress == '\x1b':
 		os.kill(os.getppid(), signal.SIGHUP)
 		exit()
 
