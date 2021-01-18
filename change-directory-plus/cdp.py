@@ -19,10 +19,9 @@ except:
 		os.system("pip3 install numpy")
 		os.system("pip3 install termcolor")
 		os.system("pip3 install curtsies")
-		os.system("pip3 install getpass")
 	except:
 		print("The missing dependency could not be aquired.")
-		print("(Be sure to have pip3 installed)")
+		print("(Be sure to have pip3 and python3 installed)")
 	exit()
 
 userName = str(getpass.getuser())
