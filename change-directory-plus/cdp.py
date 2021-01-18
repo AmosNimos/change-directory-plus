@@ -16,11 +16,12 @@ try:
 except:
 	print("Missing dependency")
 	try:
+		print("Attempting to acquire missing dependency, please wait.")
 		os.system("pip3 install numpy")
 		os.system("pip3 install termcolor")
 		os.system("pip3 install curtsies")
 	except:
-		print("The missing dependency could not be aquired.")
+		print("The missing dependency could not be acquired.")
 		print("(Be sure to have pip3 and python3 installed)")
 	exit()
 
