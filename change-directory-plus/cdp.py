@@ -1,12 +1,31 @@
 #CDP (Change Directory Plus) by amos nimos
 #Sun Jan 17 03:58:38 PM EST 2021
-import numpy as np
-import random as rn
-from termcolor import colored
-import os
-import sys
-import signal
-from curtsies import Input
+try:
+	#Required dependecy
+	import numpy as np
+	import random as rn
+	from termcolor import colored
+	#To acces directory path
+	import os
+	import sys
+	import signal
+	#To get user keyboard input
+	from curtsies import Input
+	#To get user name
+	import getpass
+except:
+	print("Missing dependency")
+	try:
+		os.system("pip3 install numpy")
+		os.system("pip3 install termcolor")
+		os.system("pip3 install curtsies")
+		os.system("pip3 install getpass")
+	except:
+		print("The missing dependency could not be aquired.")
+		print("(Be sure to have pip3 installed)")
+	exit()
+
+userName = str(getpass.getuser())
 
 #Softwair title
 sys.stdout.write("\x1b]2;CDP\x07")
@@ -91,15 +110,15 @@ while True:
 				os.chdir(str(path)+"/"+str(grid[xx]))
 				start()
 			except:
-				debug = "I'm sorry user, I'm afraid I can't acces ["+str(grid[xx])+"]."
+				debug = "I'm sorry "+userName+", I'm afraid I can't acces ["+str(grid[xx])+"]."
 		if(keypress == ' '  or keypress == 'KEY_LEFT' or keypress == 'a'):
 			#Go up a directory
 			try:
 				goup()
 			except:
-				debug = "I'm sorry user, I'm afraid I can't acces ["+str(os.path.dirname(path))+"]."
+				debug = "I'm sorry "+userName+", I'm afraid I can't acces ["+str(os.path.dirname(path))+"]."
 			if path == '/':
-				debug = "I'm sorry user, I'm afraid I can't acces [ ]."
+				debug = "I'm sorry "+userName+", I'm afraid I can't acces [ ]."
 			#start()
 
 		#press enter
@@ -131,11 +150,12 @@ while True:
 			if str(grid[x]).lower()==str(search).lower():
 				xx=x
 				SC=False
+				debug="Selection moved to: ["+str(grid[x]+"]")
 		#In case the input is not in the directory.
 		if SC:
-			debug = "I'm sorry user, I'm afraid I can't find ["+str(search)+"]."
+			debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
 			SC=False
-	
+
 	#Missing single character search
 
 	os.system('clear')
