@@ -9,8 +9,9 @@
 	Move into selected directory = a
 	Move out of current directory = d
 	Enter directory = e
-	show/hide directory content = q
-	quit terminal = escape
+	Show/hide directory content = q
+	Quit terminal = escape
+	Search file name = f
 	
 #Alternative keys
 	Move selection up = up arrow
