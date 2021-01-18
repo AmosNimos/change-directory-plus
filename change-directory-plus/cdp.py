@@ -17,6 +17,9 @@ debug=""
 global xx
 xx=0
 
+#I search mode on
+SC = False
+
 global showContent
 showContent=False;
 
@@ -70,51 +73,70 @@ start()
 display(xx)
 while True:
 	keypress = main()
-	#press down
-	if keypress == 's' or keypress == 'KEY_DOWN':
-		#Move the selection down
-		xx+=1;
-	#press up
-	if keypress == 'w' or keypress == 'KEY_UP':
-		#Move the selection up
-		xx-=1;
 
-	#Go up and down a directory
-	if keypress == 'KEY_RIGHT' or keypress == 'd':
-		#Go down a directory
-		try:
-			os.chdir(str(path)+"/"+str(grid[xx]))
-			start()
-		except:
-			debug = "I'm sorry user, I'm afraid I can't acces ["+str(grid[xx])+"]."
-	if(keypress == ' '  or keypress == 'KEY_LEFT' or keypress == 'a'):
-		#Go up a directory
-		try:
-			goup()
-		except:
-			debug = "I'm sorry user, I'm afraid I can't acces ["+str(os.path.dirname(path))+"]."
-		if path == '/':
-			debug = "I'm sorry user, I'm afraid I can't acces [ ]."
-		#start()
+	if SC==False:
+		#press down
+		if keypress == 's' or keypress == 'KEY_DOWN':
+			#Move the selection down
+			xx+=1;
+		#press up
+		if keypress == 'w' or keypress == 'KEY_UP':
+			#Move the selection up
+			xx-=1;
 
-	#press enter
-	if keypress == 'e' or  keypress == '\n':
-		#Enter the currently selected directory
-		os.system("gnome-terminal --working-directory="+str(path)+"/"+str(grid[xx]))
-		print(str(path))
-		debug = "Exit"
-		print(debug)
-		os.kill(os.getppid(), signal.SIGHUP)
-		exit()
+		#Go up and down a directory
+		if keypress == 'KEY_RIGHT' or keypress == 'd':
+			#Go down a directory
+			try:
+				os.chdir(str(path)+"/"+str(grid[xx]))
+				start()
+			except:
+				debug = "I'm sorry user, I'm afraid I can't acces ["+str(grid[xx])+"]."
+		if(keypress == ' '  or keypress == 'KEY_LEFT' or keypress == 'a'):
+			#Go up a directory
+			try:
+				goup()
+			except:
+				debug = "I'm sorry user, I'm afraid I can't acces ["+str(os.path.dirname(path))+"]."
+			if path == '/':
+				debug = "I'm sorry user, I'm afraid I can't acces [ ]."
+			#start()
 
-	#press q
-	if keypress == 'q':
-		showContent= not showContent;
+		#press enter
+		if keypress == 'e' or  keypress == '\n':
+			#Enter the currently selected directory
+			os.system("gnome-terminal --working-directory="+str(path)+"/"+str(grid[xx]))
+			print(str(path))
+			debug = "Exit"
+			print(debug)
+			os.kill(os.getppid(), signal.SIGHUP)
+			exit()
 
-	#press escape
-	if keypress == '\x1b':
-		os.kill(os.getppid(), signal.SIGHUP)
-		exit()
+		#press q
+		if keypress == 'q':
+			showContent= not showContent;
+
+		#press escape
+		if keypress == '\x1b':
+			os.kill(os.getppid(), signal.SIGHUP)
+			exit()
+
+	#press f to search word
+	if keypress == 'f':
+		SC=True
+		search = input("Search: ")
+		print(search)
+		#Loop trough the grid list to find a file with the same name as the search input.
+		for x in range(len(grid)):
+			if str(grid[x]).lower()==str(search).lower():
+				xx=x
+				SC=False
+		#In case the input is not in the directory.
+		if SC:
+			debug = "I'm sorry user, I'm afraid I can't find ["+str(search)+"]."
+			SC=False
+	
+	#Missing single character search
 
 	os.system('clear')
 
