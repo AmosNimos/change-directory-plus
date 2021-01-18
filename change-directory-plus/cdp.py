@@ -120,7 +120,7 @@ while True:
 				except:
 					debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(grid[xx])+"]."
 			else:
-					debug = "I'm sorry "+userName+", I'm afraid I can't access [nothing]."
+					debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
 		if(keypress == ' '  or keypress == 'KEY_LEFT' or keypress == 'a'):
 			#Go up a directory
 			try:
@@ -128,7 +128,7 @@ while True:
 			except:
 				debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(os.path.dirname(path))+"]."
 			if path == '/':
-				debug = "I'm sorry "+userName+", I'm afraid I can't access [nothing]."
+				debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
 			#start()
 
 		#press enter
