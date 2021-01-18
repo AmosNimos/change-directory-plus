@@ -1,3 +1,5 @@
+###CDP is a user friendly way to navigate directorys inside the terminal 
+
 #Add the following to your bashrc file to use more efficiently:
 	alias cdp = /home/"file direcory"/cdp.py
 
