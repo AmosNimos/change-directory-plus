@@ -1,18 +1,18 @@
 #CDP (Change Directory Plus) by amos nimos
 #Sun Jan 17 03:58:38 PM EST 2021
 try:
-	#Required dependecy
 	import numpy as np
 	import random as rn
 	from termcolor import colored
-	#To acces directory path
+	#to acces directory path
 	import os
 	import sys
 	import signal
-	#To get user keyboard input
+	#to get user keyboard input
 	from curtsies import Input
-	#To get user name
+	#to get user name
 	import getpass
+	import pyttsx3
 except:
 	print("Missing dependency")
 	try:
@@ -20,12 +20,15 @@ except:
 		os.system("pip3 install numpy")
 		os.system("pip3 install termcolor")
 		os.system("pip3 install curtsies")
+		os.system("pip install pyttsx3")
 	except:
 		print("The missing dependency could not be acquired.")
-		print("(Be sure to have pip3 and python3 installed)")
+		print("(Be sure to have pip3 installed)")
 	exit()
 
 userName = str(getpass.getuser())
+engine = pyttsx3.init()
+engine.setProperty('rate', 135) 
 
 #Softwair title
 sys.stdout.write("\x1b]2;CDP\x07")
@@ -71,15 +74,19 @@ def display(xx):
 		print(colored("List of content: ["+str(os.listdir(path))+"]",'green'))
 	print("")
 
-	print("--------------------\n")
-	for x in range(xx-2,xx+2):
-		if(x == xx and x<len(grid) and x>=0):
-			print(colored(" "+str(xx)+" -> ["+str(grid[x])+"]\n",'red'))
-		else:
-			if x<len(grid) and x>=0:
-				print(colored(" "+str(x)+" ("+str(grid[x])+")\n",'white'))
+	print("--------------------")
+	if len(grid)>0:
+		print("")
+		for x in range(xx-2,xx+2):
+			if(x == xx and x<len(grid) and x>=0):
+				print(colored(" "+str(xx)+" -> ["+str(grid[x])+"]\n",'red'))
 			else:
-				print(colored(" - (-)\n",'white'))
+				if x<len(grid) and x>=0:
+					print(colored(" "+str(x)+" ("+str(grid[x])+")\n",'white'))
+				else:
+					print(colored(" - (-)\n",'white'))
+	else:
+		print(colored("[Empty directory]",'white'))
 	print("--------------------\n")
 
 def main():
@@ -105,20 +112,23 @@ while True:
 
 		#Go up and down a directory
 		if keypress == 'KEY_RIGHT' or keypress == 'd':
-			#Go down a directory
-			try:
-				os.chdir(str(path)+"/"+str(grid[xx]))
-				start()
-			except:
-				debug = "I'm sorry "+userName+", I'm afraid I can't acces ["+str(grid[xx])+"]."
+			if len(grid)>0:
+				#Go down a directory
+				try:
+					os.chdir(str(path)+"/"+str(grid[xx]))
+					start()
+				except:
+					debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(grid[xx])+"]."
+			else:
+					debug = "I'm sorry "+userName+", I'm afraid I can't access [nothing]."
 		if(keypress == ' '  or keypress == 'KEY_LEFT' or keypress == 'a'):
 			#Go up a directory
 			try:
 				goup()
 			except:
-				debug = "I'm sorry "+userName+", I'm afraid I can't acces ["+str(os.path.dirname(path))+"]."
+				debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(os.path.dirname(path))+"]."
 			if path == '/':
-				debug = "I'm sorry "+userName+", I'm afraid I can't acces [ ]."
+				debug = "I'm sorry "+userName+", I'm afraid I can't access [nothing]."
 			#start()
 
 		#press enter
@@ -137,8 +147,11 @@ while True:
 
 		#press escape
 		if keypress == '\x1b':
-			os.kill(os.getppid(), signal.SIGHUP)
-			exit()
+			try:
+				os.kill(os.getppid(), signal.SIGHUP)
+				exit()
+			except:
+				debug = "I'm sorry "+userName+", I'm afraid I can't do that"
 
 	#press f to search word
 	if keypress == 'f':
@@ -169,4 +182,7 @@ while True:
 	#Display directory
 	display(xx)
 	print(debug)
+	if(debug != ""):
+		engine.say(debug)
+		engine.runAndWait()
 	debug=""
