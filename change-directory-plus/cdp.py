@@ -29,6 +29,7 @@ def start():
 	grid = []
 	for x in files:
 		grid.append(x);
+	grid.sort()
 
 def goup():
 	global path
@@ -38,6 +39,7 @@ def goup():
 	grid = []
 	for x in files:
 		grid.append(x);
+	grid.sort()
 
 def display(xx):
 	#Softwair title
