@@ -124,20 +124,20 @@ while True:
 		if keypress == 's' or keypress == 'KEY_DOWN':
 			#Move the selection down
 			xx+=1;
-			#text to speach
-			if(debug != "" and TTS==True):
-				engine.say(str(grid[xx]))
-				engine.runAndWait()
-				engine.stop()
+			#Text to speach for deaf
+			#if(debug == "" and TTS==True):
+				#engine.say(str(grid[xx]))
+				#engine.runAndWait()
+				#engine.stop()
 		#press up
 		if keypress == 'w' or keypress == 'KEY_UP':
 			#Move the selection up
 			xx-=1;
-			#text to speach
-			if(debug != "" and TTS==True):
-				engine.say(str(grid[xx]))
-				engine.runAndWait()
-				engine.stop()
+			#Text to speach for deaf
+			#if(debug == "" and TTS==True):
+				#engine.say(str(grid[xx]))
+				#engine.runAndWait()
+				#engine.stop()
 
 		#Go up and down a directory
 		if keypress == 'KEY_RIGHT' or keypress == 'd':
