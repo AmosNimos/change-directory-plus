@@ -27,13 +27,18 @@ except:
 	exit()
 
 userName = str(getpass.getuser())
-engine = pyttsx3.init()
-engine.setProperty('rate', 135) 
+
+#Text to speach option voice desactivated by default
+TTS = False
+for i in range(len(sys.argv)):
+	if str(sys.argv[i]) == "-tts":
+		TTS=True
+		#sound
+		engine = pyttsx3.init()
+		engine.setProperty('rate', 135) 
 
 #Softwair title
 sys.stdout.write("\x1b]2;CDP\x07")
-
-debug=""
 
 #cursor location
 global xx
@@ -41,10 +46,14 @@ xx=0
 
 #I search mode on
 SC = False
+#initialise debug text as an epmty string
+debug=""
 
+#Do not show all content of the working directory by default
 global showContent
 showContent=False;
 
+#set the path to current working directory
 def start():
 	global path
 	#path = os.path.dirname(os.path.realpath(__file__))
@@ -56,6 +65,7 @@ def start():
 		grid.append(x);
 	grid.sort()
 
+#set the path to current working directory parent directory
 def goup():
 	global path
 	path = os.path.dirname(path)
@@ -66,6 +76,7 @@ def goup():
 		grid.append(x);
 	grid.sort()
 
+#main display function
 def display(xx):
 	#Softwair title
 	#print("~CHANGE DIRECTORY PLUS~")
@@ -89,17 +100,25 @@ def display(xx):
 		print(colored("[Empty directory]",'white'))
 	print("--------------------\n")
 
+#get keyboard input
 def main():
 	with Input(keynames='curses') as input_generator:
 		for e in input_generator:
 			return e
 
+#clear the terminal.
 os.system('clear')
+
+#initialise programme
 start()
 display(xx)
+
+#main programme loop
 while True:
+	#get keypress function
 	keypress = main()
 
+	#If the user is not using search
 	if SC==False:
 		#press down
 		if keypress == 's' or keypress == 'KEY_DOWN':
@@ -134,9 +153,17 @@ while True:
 		#press enter
 		if keypress == 'e' or  keypress == '\n':
 			#Enter the currently selected directory
-			os.system("gnome-terminal --working-directory="+str(path)+"/"+str(grid[xx]))
-			print(str(path))
-			debug = "Exit"
+			newPath=str(path)+"/"+str(grid[xx])
+			
+			if os.path.isdir(newPath):
+				os.system("gnome-terminal --working-directory="+newPath)
+			else:
+				if os.path.isdir(path):
+					os.system("gnome-terminal --working-directory="+str(path))
+				else:	
+					debug = "I'm sorry "+userName+", I can only access directory"
+					print(debug)
+					exit()
 			print(debug)
 			os.kill(os.getppid(), signal.SIGHUP)
 			exit()
@@ -145,32 +172,33 @@ while True:
 		if keypress == 'q':
 			showContent= not showContent;
 
-		#press escape
-		if keypress == '\x1b':
-			try:
-				os.kill(os.getppid(), signal.SIGHUP)
-				exit()
-			except:
-				debug = "I'm sorry "+userName+", I'm afraid I can't do that"
-
-	#press f to search word
-	if keypress == 'f':
-		SC=True
-		search = input("Search: ")
-		print(search)
-		#Loop trough the grid list to find a file with the same name as the search input.
-		for x in range(len(grid)):
-			if str(grid[x]).lower()==str(search).lower():
-				xx=x
+		#press f to search word
+		if keypress == 'f':
+			SC=True
+			search = input("Search: ")
+			print(search)
+			#Loop trough the grid list to find a file with the same name as the search input.
+			for x in range(len(grid)):
+				if str(grid[x]).lower()==str(search).lower():
+					xx=x
+					SC=False
+					debug="Selection moved to: ["+str(grid[x]+"]")
+			#In case the input is not in the directory.
+			if SC:
+				debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
 				SC=False
-				debug="Selection moved to: ["+str(grid[x]+"]")
-		#In case the input is not in the directory.
-		if SC:
-			debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
-			SC=False
+				
+	#press escape
+	if keypress == '\x1b':
+		try:
+			os.kill(os.getppid(), signal.SIGHUP)
+			exit()
+		except:
+			debug = "I'm sorry "+userName+", I'm afraid I can't do that"
 
 	#Missing single character search
 
+	#refresh the terminal display	
 	os.system('clear')
 
 	#make the cursor loop around
@@ -181,8 +209,13 @@ while True:
 
 	#Display directory
 	display(xx)
+	#display debug text to the terminal
 	print(debug)
-	if(debug != ""):
+	
+	#text to speach
+	if(debug != "" and TTS==True):
 		engine.say(debug)
 		engine.runAndWait()
+		engine.stop()
+	#reset debug text to an empty string
 	debug=""
