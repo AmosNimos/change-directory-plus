@@ -1,7 +1,10 @@
 ###CDP is a user friendly way to navigate directorys inside the terminal 
 
 #Add the following to your bashrc file to use more efficiently:
-	alias cdp = /home/"file direcory"/cdp.py
+	alias cdp = python3 /home/"file direcory"/cdp.py
+
+#use  the following to activate text to speach //not recomended
+python3 /home/"file direcory"/cdp.py -tts
 
 #How to use
 	Move selection up = w
