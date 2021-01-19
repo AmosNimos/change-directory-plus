@@ -12,8 +12,9 @@ Use python3 /home/"file direcory"/cdp.py -sh
 	Move into selected directory = a
 	Move out of current directory = d
 	Enter directory = e
-	Show/hide directory content = q
+	Show/hide directory content = r
 	Quit terminal = escape
+	exit cdp = q
 	Search file name = f
 	
 #Alternative keys
