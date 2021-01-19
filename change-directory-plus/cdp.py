@@ -12,7 +12,6 @@ try:
 	from curtsies import Input
 	#to get user name
 	import getpass
-	import pyttsx3
 except:
 	print("Missing dependency")
 	try:
@@ -20,22 +19,12 @@ except:
 		os.system("pip3 install numpy")
 		os.system("pip3 install termcolor")
 		os.system("pip3 install curtsies")
-		os.system("pip install pyttsx3")
 	except:
 		print("The missing dependency could not be acquired.")
 		print("(Be sure to have pip3 installed)")
 	exit()
 
 userName = str(getpass.getuser())
-
-#Text to speach option voice desactivated by default
-TTS = False
-for i in range(len(sys.argv)):
-	if str(sys.argv[i]) == "-tts":
-		TTS=True
-		#sound
-		engine = pyttsx3.init()
-		engine.setProperty('rate', 135) 
 
 #Softwair title
 sys.stdout.write("\x1b]2;CDP\x07")
@@ -124,20 +113,11 @@ while True:
 		if keypress == 's' or keypress == 'KEY_DOWN':
 			#Move the selection down
 			xx+=1;
-			#Text to speach for blind
-			#if(debug == "" and TTS==True):
-				#engine.say(str(grid[xx]))
-				#engine.runAndWait()
-				#engine.stop()
+			
 		#press up
 		if keypress == 'w' or keypress == 'KEY_UP':
 			#Move the selection up
 			xx-=1;
-			#Text to speach for blind
-			#if(debug == "" and TTS==True):
-				#engine.say(str(grid[xx]))
-				#engine.runAndWait()
-				#engine.stop()
 
 		#Go up and down a directory
 		if keypress == 'KEY_RIGHT' or keypress == 'd':
@@ -222,10 +202,5 @@ while True:
 	#display debug text to the terminal
 	print(debug)
 	
-	#text to speach
-	if(debug != "" and TTS==True):
-		engine.say(debug)
-		engine.runAndWait()
-		engine.stop()
 	#reset debug text to an empty string
 	debug=""
