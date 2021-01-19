@@ -24,6 +24,8 @@ except:
 		print("(Be sure to have pip3 installed)")
 	exit()
 
+
+
 userName = str(getpass.getuser())
 
 #Softwair title
@@ -42,6 +44,13 @@ debug=""
 global showContent
 showContent=False;
 
+#hide hidden file by default
+global hide
+hide=True
+for i in range(len(sys.argv)):
+	if str(sys.argv[i]) == "-sh":
+		hide=False	
+
 #set the path to current working directory
 def start():
 	global path
@@ -51,7 +60,11 @@ def start():
 	global grid
 	grid = []
 	for x in files:
-		grid.append(x);
+		if x[:1]==".":
+			if hide == False:
+				grid.append(x)
+		else:
+			grid.append(x)
 	grid.sort()
 
 #set the path to current working directory parent directory
@@ -62,7 +75,11 @@ def goup():
 	global grid
 	grid = []
 	for x in files:
-		grid.append(x);
+		if x[:1]==".":
+			if hide == False:
+				grid.append(x)
+		else:
+			grid.append(x)
 	grid.sort()
 
 #main display function
@@ -113,7 +130,7 @@ while True:
 		if keypress == 's' or keypress == 'KEY_DOWN':
 			#Move the selection down
 			xx+=1;
-			
+
 		#press up
 		if keypress == 'w' or keypress == 'KEY_UP':
 			#Move the selection up
@@ -144,13 +161,13 @@ while True:
 		if keypress == 'e' or  keypress == '\n':
 			#Enter the currently selected directory
 			newPath=str(path)+"/"+str(grid[xx])
-			
+
 			if os.path.isdir(newPath):
 				os.system("gnome-terminal --working-directory="+newPath)
 			else:
 				if os.path.isdir(path):
 					os.system("gnome-terminal --working-directory="+str(path))
-				else:	
+				else:
 					debug = "I'm sorry "+userName+", I can only access directory"
 					print(debug)
 					exit()
@@ -177,7 +194,7 @@ while True:
 			if SC:
 				debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
 				SC=False
-				
+
 	#press escape
 	if keypress == '\x1b':
 		try:
@@ -188,7 +205,7 @@ while True:
 
 	#Missing single character search
 
-	#refresh the terminal display	
+	#refresh the terminal display
 	os.system('clear')
 
 	#make the cursor loop around
@@ -201,6 +218,6 @@ while True:
 	display(xx)
 	#display debug text to the terminal
 	print(debug)
-	
+
 	#reset debug text to an empty string
 	debug=""
