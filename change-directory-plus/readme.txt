@@ -5,6 +5,7 @@
 
 To show hidden content use:
 Use python3 /home/"file direcory"/cdp.py -sh
+
 #How to use
 	Move selection up = w
 	Move selection down = s
