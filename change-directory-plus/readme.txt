@@ -3,6 +3,8 @@
 #Add the following to your bashrc file to use more efficiently:
 	alias cdp = python3 /home/"file direcory"/cdp.py
 
+To show hidden content use:
+Use python3 /home/"file direcory"/cdp.py -sh
 #How to use
 	Move selection up = w
 	Move selection down = s
