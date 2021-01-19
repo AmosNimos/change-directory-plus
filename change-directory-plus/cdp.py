@@ -32,7 +32,6 @@ userName = str(getpass.getuser())
 sys.stdout.write("\x1b]2;CDP\x07")
 
 #cursor location
-global xx
 xx=0
 
 #I search mode on
@@ -41,12 +40,11 @@ SC = False
 debug=""
 
 #Do not show all content of the working directory by default
-global showContent
 showContent=False;
 
 #hide hidden file by default
-global hide
 hide=True
+
 for i in range(len(sys.argv)):
 	if str(sys.argv[i]) == "-sh":
 		hide=False	
@@ -119,7 +117,97 @@ os.system('clear')
 start()
 display(xx)
 
-#def scrolling():
+def scrolling(keypress):
+	global xx
+	global showContent
+	global hide
+	global debug
+	#press down
+	if keypress == 's' or keypress == 'KEY_DOWN':
+		#Move the selection down
+		xx+=1
+
+	#press up
+	if keypress == 'w' or keypress == 'KEY_UP':
+		#Move the selection up
+		xx-=1
+
+	#Go up and down a directory
+	if keypress == 'KEY_RIGHT' or keypress == 'd':
+		if len(grid)>0:
+			#Go down a directory
+			try:
+				os.chdir(str(path)+"/"+str(grid[xx]))
+				start()
+			except:
+				debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(grid[xx])+"]."
+		else:
+				debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
+	if(keypress == ' '  or keypress == 'KEY_LEFT' or keypress == 'a'):
+		#Go up a directory
+		try:
+			goup()
+		except:
+			debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(os.path.dirname(path))+"]."
+		if path == '/':
+			debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
+		#start()
+
+	#press enter
+	if keypress == 'e' or  keypress == '\n':
+		#Enter the currently selected directory
+		newPath=str(path)+"/"+str(grid[xx])
+		oldPath=str(grid[xx])
+		if os.path.isdir(newPath):
+			os.system("gnome-terminal --working-directory="+newPath)
+			os.kill(os.getppid(), signal.SIGHUP)
+			exit()
+		elif os.path.isfile(oldPath):
+			#fs = open(grid[xx], 'r')
+			#debug=fs.read()
+			#fs.close()
+			
+			exit()
+		#elif os.path.isdir(path):
+			#os.system("gnome-terminal --working-directory="+str(path))
+			#os.kill(os.getppid(), signal.SIGHUP)
+			#exit()
+		else:
+			#debug = "I'm sorry "+str(userName)+", I can't open ["+str(str(grid[xx])+"]."
+			#print(debug)
+			exit()
+
+	#press r
+	if keypress == 'r':
+		showContent= not showContent
+
+	#press f to search word
+	if keypress == 'f':
+		SC=True
+		search = input("Search: ")
+		print(search)
+		#Loop trough the grid list to find a file with the same name as the search input.
+		for x in range(len(grid)):
+			if str(grid[x]).lower()==str(search).lower():
+				xx=x
+				SC=False
+				debug="Selection moved to: ["+str(grid[x]+"]")
+				
+		#Loop trough the grid list to find a file that start with the same character as the search input.
+		if SC:
+			for x in range(len(grid)):
+				if len(search)>0 and str(grid[x])[:1].lower() == search[:1].lower():
+					xx=x
+					SC=False
+					debug="Selection moved to: ["+str(grid[x]+"]")
+					break
+					
+		#In case the input is not in the directory.
+		if SC:
+			debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
+			SC=False
+	return xx
+
 	
 
 #main programme loop
@@ -129,81 +217,7 @@ while True:
 
 	#If the user is not using search
 	if SC==False:
-		#press down
-		if keypress == 's' or keypress == 'KEY_DOWN':
-			#Move the selection down
-			xx+=1
-
-		#press up
-		if keypress == 'w' or keypress == 'KEY_UP':
-			#Move the selection up
-			xx-=1
-
-		#Go up and down a directory
-		if keypress == 'KEY_RIGHT' or keypress == 'd':
-			if len(grid)>0:
-				#Go down a directory
-				try:
-					os.chdir(str(path)+"/"+str(grid[xx]))
-					start()
-				except:
-					debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(grid[xx])+"]."
-			else:
-					debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
-		if(keypress == ' '  or keypress == 'KEY_LEFT' or keypress == 'a'):
-			#Go up a directory
-			try:
-				goup()
-			except:
-				debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(os.path.dirname(path))+"]."
-			if path == '/':
-				debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
-			#start()
-
-		#press enter
-		if keypress == 'e' or  keypress == '\n':
-			#Enter the currently selected directory
-			newPath=str(path)+"/"+str(grid[xx])
-
-			if os.path.isdir(newPath):
-				os.system("gnome-terminal --working-directory="+newPath)
-			else:
-				if os.path.isdir(path):
-					os.system("gnome-terminal --working-directory="+str(path))
-				else:
-					debug = "I'm sorry "+userName+", I can only access directory"
-					print(debug)
-					exit()
-			print(debug)
-			os.kill(os.getppid(), signal.SIGHUP)
-			exit()
-
-		#press r
-		if keypress == 'r':
-			showContent= not showContent
-
-		#press f to search word
-		if keypress == 'f':
-			SC=True
-			search = input("Search: ")
-			print(search)
-			#Loop trough the grid list to find a file with the same name as the search input.
-			for x in range(len(grid)):
-				if str(grid[x]).lower()==str(search).lower():
-					xx=x
-					SC=False
-					debug="Selection moved to: ["+str(grid[x]+"]")
-				elif len(search)>0:
-						if str(grid[x])[:1].lower() == search[:1].lower():
-							xx=x
-							SC=False
-							debug="Selection moved to: ["+str(grid[x]+"]")
-							break
-			#In case the input is not in the directory.
-			if SC:
-				debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
-				SC=False
-
+		scrolling(keypress)
 	#refresh the terminal display
 	os.system('clear')
 	
