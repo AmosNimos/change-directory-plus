@@ -65,7 +65,7 @@ def start():
 				grid.append(x)
 		else:
 			grid.append(x)
-	grid.sort()
+	grid.sort(key=str.casefold)
 
 #set the path to current working directory parent directory
 def goup():
@@ -80,7 +80,7 @@ def goup():
 				grid.append(x)
 		else:
 			grid.append(x)
-	grid.sort()
+	grid.sort(key=str.casefold)
 
 #main display function
 def display(xx):
@@ -119,6 +119,9 @@ os.system('clear')
 start()
 display(xx)
 
+#def scrolling():
+	
+
 #main programme loop
 while True:
 	#get keypress function
@@ -129,12 +132,12 @@ while True:
 		#press down
 		if keypress == 's' or keypress == 'KEY_DOWN':
 			#Move the selection down
-			xx+=1;
+			xx+=1
 
 		#press up
 		if keypress == 'w' or keypress == 'KEY_UP':
 			#Move the selection up
-			xx-=1;
+			xx-=1
 
 		#Go up and down a directory
 		if keypress == 'KEY_RIGHT' or keypress == 'd':
@@ -175,9 +178,9 @@ while True:
 			os.kill(os.getppid(), signal.SIGHUP)
 			exit()
 
-		#press q
-		if keypress == 'q':
-			showContent= not showContent;
+		#press r
+		if keypress == 'r':
+			showContent= not showContent
 
 		#press f to search word
 		if keypress == 'f':
@@ -190,11 +193,21 @@ while True:
 					xx=x
 					SC=False
 					debug="Selection moved to: ["+str(grid[x]+"]")
+				elif len(search)>0:
+						if str(grid[x])[:1].lower() == search[:1].lower():
+							xx=x
+							SC=False
+							debug="Selection moved to: ["+str(grid[x]+"]")
+							break
 			#In case the input is not in the directory.
 			if SC:
 				debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
 				SC=False
 
+	#refresh the terminal display
+	os.system('clear')
+	
+	#----------------------------
 	#press escape
 	if keypress == '\x1b':
 		try:
@@ -203,10 +216,9 @@ while True:
 		except:
 			debug = "I'm sorry "+userName+", I'm afraid I can't do that"
 
-	#Missing single character search
-
-	#refresh the terminal display
-	os.system('clear')
+	#exit programme
+	if keypress == 'q':
+		exit()
 
 	#make the cursor loop around
 	if xx>len(grid)-1:
