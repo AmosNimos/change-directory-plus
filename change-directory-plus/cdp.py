@@ -124,7 +124,7 @@ while True:
 		if keypress == 's' or keypress == 'KEY_DOWN':
 			#Move the selection down
 			xx+=1;
-			#Text to speach for deaf
+			#Text to speach for blind
 			#if(debug == "" and TTS==True):
 				#engine.say(str(grid[xx]))
 				#engine.runAndWait()
@@ -133,7 +133,7 @@ while True:
 		if keypress == 'w' or keypress == 'KEY_UP':
 			#Move the selection up
 			xx-=1;
-			#Text to speach for deaf
+			#Text to speach for blind
 			#if(debug == "" and TTS==True):
 				#engine.say(str(grid[xx]))
 				#engine.runAndWait()
