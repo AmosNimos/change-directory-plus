@@ -3,9 +3,6 @@
 #Add the following to your bashrc file to use more efficiently:
 	alias cdp = python3 /home/"file direcory"/cdp.py
 
-#use  the following to activate text to speach //not recomended
-python3 /home/"file direcory"/cdp.py -tts
-
 #How to use
 	Move selection up = w
 	Move selection down = s
