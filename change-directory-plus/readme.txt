@@ -27,12 +27,12 @@ Use python3 /home/"file direcory"/cdp.py -sh
 #Features currently in development (Not yet implemented):
 	 Rename files and directorys
 	 Copy a line of text to clipboard
-	 Edit a line of text in a file.
+	 (kinda working) Edit a line of text in a file.
 	 Create new file and directory
 	 Lunch application
 	 Delete files and directorys
 	 (working) Open a terminal at a (selected directory) without closing cdp.
 	 (working) Open the directory and file with the default gui file manager
-	 Vim keys (H,J,K,L)
+	 (working) Vim keys (H,J,K,L)
 
 
