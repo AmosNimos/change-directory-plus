@@ -32,5 +32,7 @@ Use python3 /home/"file direcory"/cdp.py -sh
 	 Lunch application
 	 Delete files and directorys
 	 Open a terminal at a (selected directory) without closing cdp.
+	 Open the directory with the gui file manager hint(xdg-open .)
+	 Vim keys (H,J,K,L)
 
 
