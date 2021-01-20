@@ -24,12 +24,13 @@ Use python3 /home/"file direcory"/cdp.py -sh
 	Move out of current directory = left arrow
 	Enter directory = enter
 
-#Currently in development (Not yet implemented):
+#Features currently in development (Not yet implemented):
 	 Rename files and directorys
 	 Copy a line of text to clipboard
 	 Edit a line of text in a file.
 	 Create new file and directory
 	 Lunch application
 	 Delete files and directorys
+	 Open a terminal at a (selected directory) without closing cdp.
 
 
