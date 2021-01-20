@@ -31,8 +31,8 @@ Use python3 /home/"file direcory"/cdp.py -sh
 	 Create new file and directory
 	 Lunch application
 	 Delete files and directorys
-	 Open a terminal at a (selected directory) without closing cdp.
-	 Open the directory and file with the default gui file manager
+	 (working) Open a terminal at a (selected directory) without closing cdp.
+	 (working) Open the directory and file with the default gui file manager
 	 Vim keys (H,J,K,L)
 
 
