@@ -7,6 +7,8 @@
 
 [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=3SZVAQAEVAT6Q)
 
+![](cdp_screenshot/cdp_screen_001.png)
+![](cdp_screenshot/cdp_screen_002.png)
 
 ## How to use
 	Move selection up = w
