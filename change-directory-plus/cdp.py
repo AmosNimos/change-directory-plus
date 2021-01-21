@@ -1,5 +1,9 @@
-#CDP (Change Directory Plus) by amos nimos
+#CDP (Change Directory Plus) by AKUMA/Amos Nimos
 #Sun Jan 17 03:58:38 PM EST 2021
+
+#----------------------------------------------------------------------------------#
+				# DEPENDENCY #
+#----------------------------------------------------------------------------------#
 try:
 	import numpy as np
 	import random as rn
@@ -24,26 +28,32 @@ except:
 		print("(Be sure to have pip3 installed)")
 	exit()
 
-
-
+#----------------------------------------------------------------------------------#
+				# VARIABLES #
+#----------------------------------------------------------------------------------#
+#var
+#Get username for debug
+#btw (is optional)
 userName = str(getpass.getuser())
 
 #Softwair title
-sys.stdout.write("\x1b]2;CDP\x07")
+sys.stdout.write("\x1b]2;Change Dicrectory Plus\x07")
 
+#btw (Idealy the would only be a single cursor variable)
 #directory cursor location
-xx=0
+directorySelection=0
+
 #file cursor location
-yy=0
+fileSelection=0
 
 #I search mode on
-SC = False
+searching = False
 
 #initialise debug text as an epmty string
 debug=""
 
 #log the historic of selected directory index
-dlog=[]
+directoryLog=[]
 
 #Do not show all content of the working directory by default
 showContent=False;
@@ -52,15 +62,25 @@ showContent=False;
 hide=True
 
 #active cdp activity
-activity=0
-#0=directory scrolling
+#0=directory searchingrolling
 #1=file viewing
 #2=line editing
+activity=0
 
+#----------------------------------------------------------------------------------#
+				# ARGUMENTS #
+#----------------------------------------------------------------------------------#
+#arg
 for i in range(len(sys.argv)):
 	if str(sys.argv[i]) == "-sh":
-		hide=False	
+		hide=False
+	if str(sys.argv[i]) == "-searching":
+		showContent=True
 
+#----------------------------------------------------------------------------------#
+				# PATH #
+#----------------------------------------------------------------------------------#
+#pth
 #set the path to current working directory
 def start():
 	global path
@@ -80,8 +100,8 @@ def start():
 #set the path to current working directory parent directory
 def goup():
 	global path
-	global dlog
-	global xx
+	global directoryLog
+	global directorySelection
 	path = os.path.dirname(path)
 	files = os.listdir(path)
 	global grid
@@ -93,18 +113,19 @@ def goup():
 		else:
 			grid.append(x)
 	grid.sort(key=str.casefold)
-	if len(dlog)>0:
-		xx = dlog[-1]
-		del dlog[-1]
-	return xx
-		
+	if len(directoryLog)>0:
+		directorySelection = directoryLog[-1]
+		del directoryLog[-1]
+	return directorySelection
+
 
 #----------------------------------------------------------------------------------#
-									# DISPLAY #
+				# DISPLAY #
 #----------------------------------------------------------------------------------#
+#dsp
 #Main display function
-def display(xx):
-	global yy
+def display(directorySelection):
+	global fileSelection
 	#Softwair title
 	#print("~CHANGE DIRECTORY PLUS~")
 	if activity==0:
@@ -116,9 +137,9 @@ def display(xx):
 		print("--------------------")
 		if len(grid)>0:
 			print("")
-			for x in range(xx-2,xx+2):
-				if(x == xx and x<len(grid) and x>=0):
-					print(colored(" "+str(xx)+" -> ["+str(grid[x])+"]\n",'red'))
+			for x in range(directorySelection-2,directorySelection+2):
+				if(x == directorySelection and x<len(grid) and x>=0):
+					print(colored(" "+str(directorySelection)+" -> ["+str(grid[x])+"]\n",'red'))
 				else:
 					if x<len(grid) and x>=0:
 						print(colored(" "+str(x)+" ("+str(grid[x])+")\n",'white'))
@@ -127,35 +148,66 @@ def display(xx):
 		else:
 			print(colored("[Empty directory]",'white'))
 		print("--------------------\n")
+	#dsp-a1
 	elif activity==1:
 		#Open file
-		fs = open(grid[xx], 'r')
+		fs = open(grid[directorySelection], 'r')
 		#store lines into an array
 		linelist = fs.readlines()
-		#debug=fs.read()
+
+		#check for empty line
+		#if len(linelist)<1:
+			#file = open(grid[directorySelection], 'w')
+			#file.write("")
+			#file.close()
+			#linelist = fs.readlines()
+
 		fs.close()
 		#loop file cursor
-		if yy>len(linelist)-1:
-			yy=0
-		if yy<0:
-			yy=len(linelist)-1
-		print(colored("Current file: ["+str(grid[xx])+"]",'red'))
+		#if fileSelection>len(linelist)-1:
+			#fileSelection=0
+		if fileSelection<0:
+			fileSelection=len(linelist)-1
+		print(colored("Current file: ["+str(grid[directorySelection])+"]",'red'))
 		print("")
 		print("--------------------")
+		#remove end line.
 		for i in range(len(linelist)):
 			linelist[i]=linelist[i].strip('\n')
-		for x in range(yy-2,yy+2):
-			if(x == yy and x<len(linelist) and x>=0):
-				print(colored(" "+str(x)+" -> ["+str(linelist[x])+"]\n",'red'))
+		#file delimitation begin and end
+		fd=""
+		for x in range(fileSelection-2,fileSelection+2):
+			#file delimitation warning
+			if x==0:
+				fd=colored("[BEGIN]:",'green')
+			elif x==len(linelist)-1:
+				fd=colored("[END]:",'green')
 			else:
-				if x<len(linelist) and x>=0:
-					print(colored(" "+str(x)+" ("+str(linelist[x])+")\n",'white'))
+				fd=""
+
+			#if is selected and is within file delimitation
+			if(x == fileSelection and x<len(linelist) and x>=0):
+				#if line is empty
+				if(str(linelist[x])==""):
+					print(fd+colored(" "+str(x)+" ()\n",'red'))
+				else:
+					print(fd+colored(" "+str(x)+" -> ["+str(linelist[x]).strip()+"]\n",'red'))
+			else:
+				if x<len(linelist) and x>=0 and str(linelist[x])!="":
+					print(fd+colored(" "+str(x)+" ("+str(linelist[x])+")\n",'white'))
+				elif x == fileSelection:
+					print(fd+colored(" "+str(x)+" ()\n",'red'))
+				elif x>=0:
+					print(fd+colored(" "+str(x)+" ()\n",'white'))
 				else:
 					print(colored(" - (-)\n",'white'))
 		print("--------------------\n")
-	return yy
+	return fileSelection
 
-#Get keyboard input
+#----------------------------------------------------------------------------------#
+				# MAIN #
+#----------------------------------------------------------------------------------#
+#mn
 def main():
 	with Input(keynames='curses') as input_generator:
 		for e in input_generator:
@@ -166,50 +218,54 @@ os.system('clear')
 
 #initialise programme
 start()
-display(xx)
+display(directorySelection)
 
 #----------------------------------------------------------------------------------#
-									# ACTIVITY #
+				# ACTIVITY 0 #
 #----------------------------------------------------------------------------------#
-#activity 0
-def scrolling(keypress):
-	global xx
+#a0
+#moving around directory
+def searchingrolling(keypress):
+
+	#--------- a0-global variables ---------#
+	global directorySelection
 	global showContent
 	global hide
 	global debug
 	global activity
+
 	#press down
-	if keypress == 's' or keypress == 'KEY_DOWN':
+	if keypress == 's' or keypress == 'KEY_DOWN' or keypress == 'j':
 		#Move the selection down
-		xx+=1
+		directorySelection+=1
 
 	#press up
-	if keypress == 'w' or keypress == 'KEY_UP':
+	if keypress == 'w' or keypress == 'KEY_UP' or keypress == 'k':
 		#Move the selection up
-		xx-=1
+		directorySelection-=1
 
 	#Go up and down a directory
 	#RIGHT
-	if keypress == 'KEY_RIGHT' or keypress == 'd':
+	if keypress == 'd' or keypress == 'KEY_RIGHT' or keypress == 'l':
 		if len(grid)>0:
 			#Go down a directory
 			try:
-				dlog.append(int(xx))
-				os.chdir(str(path)+"/"+str(grid[xx]))
+				directoryLog.append(int(directorySelection))
+				os.chdir(str(path)+"/"+str(grid[directorySelection]))
 				start()
 			except:
-				oldPath=str(grid[xx])
+				oldPath=str(grid[directorySelection])
 				#try change activity to edit file
 				if os.path.isfile(oldPath):
 					activity=1
 					#exit()
 				else:
-					debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(grid[xx])+"]."
+					debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(grid[directorySelection])+"]."
 		else:
 				debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
-	
+
 	#LEFT
-	if(keypress == ' '  or keypress == 'KEY_LEFT' or keypress == 'a'):
+	if keypress == 'a'  or keypress == 'KEY_LEFT' or keypress == 'h':
 		#Go up a directory
 		try:
 			goup()
@@ -221,68 +277,112 @@ def scrolling(keypress):
 
 	#press r
 	if keypress == 'r':
+		#might be remap to a more usful action.
 		showContent= not showContent
 
-	#press f to search word
+	#--------- a0-search  ---------#
 	if keypress == 'f':
-		SC=True
+		searching=True
 		search = input("Search: ")
 		print(search)
 		#Loop trough the grid list to find a file with the same name as the search input.
 		for x in range(len(grid)):
 			if str(grid[x]).lower()==str(search).lower():
-				xx=x
-				SC=False
+				directorySelection=x
+				searching=False
 				debug="Selection moved to: ["+str(grid[x]+"]")
 		#Loop trough the grid list to find a file that start with the same character as the search input.
-		if SC:
+		if searching:
 			for x in range(len(grid)):
 				if len(search)>0 and str(grid[x])[:1].lower() == search[:1].lower():
-					xx=x
-					SC=False
+					directorySelection=x
+					searching=False
 					debug="Selection moved to: ["+str(grid[x]+"]")
 					break
 		#In case the input is not in the directory.
-		if SC:
+		if searching:
 			debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
-			SC=False
-	return xx
+			searching=False
+	return directorySelection
 
-#activity 1
+#----------------------------------------------------------------------------------#
+				# ACTIVITY 1 #
+#----------------------------------------------------------------------------------#
+#a1
+#moving around file
 def viewing(keypress):
-	global yy
+	#--------- activity-1 global variables ---------#
+	global fileSelection
 	global activity
+
 	#press down
-	if keypress == 's' or keypress == 'KEY_DOWN':
+	if keypress == 's' or keypress == 'KEY_DOWN' or keypress == 'j':
 		#Move the selection down
-		yy+=1
+		fileSelection+=1
 
 	#press up
-	if keypress == 'w' or keypress == 'KEY_UP':
+	if keypress == 'w' or keypress == 'KEY_UP' or keypress == 'k':
 		#Move the selection up
-		yy-=1
+		fileSelection-=1
 	#press left
-	if(keypress == ' '  or keypress == 'KEY_LEFT' or keypress == 'a'):
+	if(keypress == 'a'  or keypress == 'KEY_LEFT' or keypress == 'h'):
 		activity=0
-	return yy
 
-#main programme loop
+	#--------- activity-1 search  ---------#
+	if keypress == 'f':
+		searching=True
+		search = input("Search: ")
+		print(search)
+		#Loop trough the grid list to find a file with the same name as the search input.
+		for x in range(len(linelist)):
+			if str(linelist[x]).lower()==str(search).lower():
+				fileSelection=x
+				searching=False
+				debug="Selection moved to: ["+str(linelist[x]+"]")
+		#Loop trough the grid list to find a file that start with the same character as the search input.
+		if searching:
+			for x in range(len(linelist)):
+				if len(search)>0 and str(linelist[x])[:1].lower() == search[:1].lower():
+					fileSelection=x
+					searching=False
+					debug="Selection moved to: ["+str(linelist[x]+"]")
+					break
+		#In case the input is not in the directory.
+		if searching:
+			debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
+			searching=False
+	return fileSelection
+
+#----------------------------------------------------------------------------------#
+				# ACTIVITY 2 #
+#----------------------------------------------------------------------------------#
+#a2
+#editing file line
+
+### In development
+
+#----------------------------------------------------------------------------------#
+				# LOOP #
+#----------------------------------------------------------------------------------#
+#lp
+#Main programme loop
 while True:
-	#get keypress function
+
+	#Get keypress from the main function
 	keypress = main()
 
+	#Refresh the terminal display
+	os.system('clear')
+
 	#If the user is not using search
-	if SC==False:
+	if searching==False:
 		if activity==0:
-			scrolling(keypress)
+			searchingrolling(keypress)
 		elif activity==1:
 			viewing(keypress)
-			
-	#refresh the terminal display
-	os.system('clear')
-	
-	# Permanent keypress options ----------------------------
-	#press escape
+
+	#--------- Permanently available keypress options ---------#
+	#press esearchingape
 	if keypress == '\x1b':
 		try:
 			os.kill(os.getppid(), signal.SIGHUP)
@@ -290,15 +390,15 @@ while True:
 		except:
 			debug = "I'm sorry "+userName+", I'm afraid I can't do that"
 
-	#exit programme
+	#exit cdp
 	if keypress == 'q':
 		exit()
-		
-	#press enter
+
+	#open dir in terminal and quiting cdp
 	if keypress == 'e' or  keypress == '\n':
 		#Enter the currently selected directory
-		newPath=str(path)+"/"+str(grid[xx])
-		oldPath=str(grid[xx])
+		newPath=str(path)+"/"+str(grid[directorySelection])
+		oldPath=str(grid[directorySelection])
 		if os.path.isdir(newPath):
 			os.system("gnome-terminal --working-directory="+newPath)
 			os.kill(os.getppid(), signal.SIGHUP)
@@ -308,20 +408,50 @@ while True:
 			os.kill(os.getppid(), signal.SIGHUP)
 			exit()
 		else:
-			debug = "I'm sorry "+str(userName)+", I can't open ["+str(grid[xx])+"]."
+			debug = "I'm sorry "+str(userName)+", I can't open ["+str(grid[directorySelection])+"]."
+			print(debug)
+			exit()
+
+	#open dir in terminal without quiting cdp
+	if keypress == ' ':
+		#Enter the currently selected directory
+		newPath=str(path)+"/"+str(grid[directorySelection])
+		oldPath=str(grid[directorySelection])
+		if os.path.isdir(newPath):
+			os.system("gnome-terminal --working-directory="+newPath)
+		elif os.path.isdir(path):
+			os.system("gnome-terminal --working-directory="+str(path))
+		else:
+			debug = "I'm sorry "+str(userName)+", I can't open ["+str(grid[directorySelection])+"]."
+			print(debug)
+			exit()
+
+	#Open with gui file manager (xdg)
+	if keypress == 'o':
+		#Enter the currently selected directory
+		newPath=str(path)+"/"+str(grid[directorySelection])
+		oldPath=str(grid[directorySelection])
+		try:
+			os.system("xdg-open " + newPath)
+		except:
+			debug = "I'm sorry "+str(userName)+", I can't open ["+str(grid[directorySelection])+"]."
 			print(debug)
 			exit()
 
 	#make the cursor loop around
-	if xx>len(grid)-1:
-		xx=0
-	if xx<0:
-		xx=len(grid)-1
+	if directorySelection>len(grid)-1:
+		directorySelection=0
+	if directorySelection<0:
+		directorySelection=len(grid)-1
 
 	#Display directory
-	display(xx)
+	display(directorySelection)
+
 	#display debug text to the terminal
 	print(debug)
 
 	#reset debug text to an empty string
 	debug=""
+#----------------------------------------------------------------------------------#
+				# END #
+#----------------------------------------------------------------------------------#
