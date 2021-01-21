@@ -7,11 +7,6 @@
 
 [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=3SZVAQAEVAT6Q)
 
-#Add the following to your bashrc file to use more efficiently:
-	alias cdp = python3 /home/"file direcory"/cdp.py
-
-To show hidden content use:
-Use python3 /home/"file direcory"/cdp.py -sh
 
 ## How to use
 	Move selection up = w
@@ -30,6 +25,13 @@ Use python3 /home/"file direcory"/cdp.py -sh
 	Move into selected directory = right arrow
 	Move out of current directory = left arrow
 	Enter directory = enter
+
+## Tips
+	Add the following to your bashrc file to use more efficiently:
+	alias cdp = python3 /home/"file direcory"/cdp.py
+
+	To show hidden content use:
+	Use python3 /home/"file direcory"/cdp.py -sh
 
 ## Installation
 	(not yet available)
