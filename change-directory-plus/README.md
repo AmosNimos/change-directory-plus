@@ -49,3 +49,5 @@
 
 ## Release History
 	Alpha
+	
+## AKUMA open source project by Amos Nimos
