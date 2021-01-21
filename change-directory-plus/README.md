@@ -1,6 +1,6 @@
 ###CDP is a user friendly way to navigate directorys inside the terminal 
 
-| Paypal |
+| help to support this project with a Paypal donnation to AKUMA |
 [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=3SZVAQAEVAT6Q)
 
 #Add the following to your bashrc file to use more efficiently:
