@@ -23,6 +23,7 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 	Search file name = f
 	Search index integer = r
 	return to the home/user directory = c
+	show/hide hidden directory = v
 	
 ## Alternative keys
 	Move selection up = up arrow
