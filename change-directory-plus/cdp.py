@@ -2,7 +2,7 @@
 #Sun Jan 17 03:58:38 PM EST 2021
 
 #----------------------------------------------------------------------------------#
-				# DEPENDENCY #
+	# DEPENDENCY #
 #----------------------------------------------------------------------------------#
 try:
 	import numpy as np
@@ -29,7 +29,7 @@ except:
 	exit()
 
 #----------------------------------------------------------------------------------#
-				# VARIABLES #
+	# VARIABLES #
 #----------------------------------------------------------------------------------#
 #var
 #Get username for debug
@@ -68,7 +68,7 @@ hide=True
 activity=0
 
 #----------------------------------------------------------------------------------#
-				# ARGUMENTS #
+	# ARGUMENTS #
 #----------------------------------------------------------------------------------#
 #arg
 for i in range(len(sys.argv)):
@@ -78,7 +78,7 @@ for i in range(len(sys.argv)):
 		showContent=True
 
 #----------------------------------------------------------------------------------#
-				# PATH #
+	# PATH #
 #----------------------------------------------------------------------------------#
 #pth
 #set the path to current working directory
@@ -120,7 +120,7 @@ def goup():
 
 
 #----------------------------------------------------------------------------------#
-				# DISPLAY #
+	# DISPLAY #
 #----------------------------------------------------------------------------------#
 #dsp
 #Main display function
@@ -205,7 +205,7 @@ def display(directorySelection):
 	return fileSelection
 
 #----------------------------------------------------------------------------------#
-				# MAIN #
+	# MAIN #
 #----------------------------------------------------------------------------------#
 #mn
 def main():
@@ -221,7 +221,7 @@ start()
 display(directorySelection)
 
 #----------------------------------------------------------------------------------#
-				# ACTIVITY 0 #
+	# ACTIVITY 0 #
 #----------------------------------------------------------------------------------#
 #a0
 #moving around directory
@@ -276,28 +276,49 @@ def searchingrolling(keypress):
 		#start()
 
 	#press r
+	#if keypress == 'r':
+		##might be remap to a more usful action.
+		#showContent= not showContent
+
+	#search index
 	if keypress == 'r':
-		#might be remap to a more usful action.
-		showContent= not showContent
+		searching=True
+		repeat = True
+		while repeat == True:
+			try:
+				search = int(input("Index: "))
+				if search < len(grid):
+					directorySelection=search
+					repeat=False
+					debug="Selection moved to index: ["+str(search)+"]"
+				else:
+					debug = "I'm sorry "+userName+", I'm afraid I can't acces index ["+str(search)+"]"
+					#Refresh the terminal display
+					os.system('clear')
+					print(debug)
+			except:
+				debug = "Index must be integer."
+				#Refresh the terminal display
+				os.system('clear')
+				print(debug)
 
 	#--------- a0-search  ---------#
 	if keypress == 'f':
 		searching=True
 		search = input("Search: ")
-		print(search)
 		#Loop trough the grid list to find a file with the same name as the search input.
 		for x in range(len(grid)):
 			if str(grid[x]).lower()==str(search).lower():
 				directorySelection=x
 				searching=False
-				debug="Selection moved to: ["+str(grid[x]+"]")
+				debug="Selection moved to: ["+str(grid[x])+"]"
 		#Loop trough the grid list to find a file that start with the same character as the search input.
 		if searching:
 			for x in range(len(grid)):
 				if len(search)>0 and str(grid[x])[:1].lower() == search[:1].lower():
 					directorySelection=x
 					searching=False
-					debug="Selection moved to: ["+str(grid[x]+"]")
+					debug="Selection moved to: ["+str(grid[x])+"]"
 					break
 		#In case the input is not in the directory.
 		if searching:
@@ -306,7 +327,7 @@ def searchingrolling(keypress):
 	return directorySelection
 
 #----------------------------------------------------------------------------------#
-				# ACTIVITY 1 #
+	# ACTIVITY 1 #
 #----------------------------------------------------------------------------------#
 #a1
 #moving around file
@@ -354,7 +375,7 @@ def viewing(keypress):
 	return fileSelection
 
 #----------------------------------------------------------------------------------#
-				# ACTIVITY 2 #
+	# ACTIVITY 2 #
 #----------------------------------------------------------------------------------#
 #a2
 #editing file line
@@ -362,7 +383,7 @@ def viewing(keypress):
 ### In development
 
 #----------------------------------------------------------------------------------#
-				# LOOP #
+	# LOOP #
 #----------------------------------------------------------------------------------#
 #lp
 #Main programme loop
@@ -453,5 +474,5 @@ while True:
 	#reset debug text to an empty string
 	debug=""
 #----------------------------------------------------------------------------------#
-				# END #
+	# END #
 #----------------------------------------------------------------------------------#
