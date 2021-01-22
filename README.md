@@ -22,6 +22,7 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 	exit cdp = q
 	Search file name = f
 	Search index integer = r
+	return to the home/user directory = c
 	
 ## Alternative keys
 	Move selection up = up arrow
@@ -47,7 +48,7 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 ## Features currently in development (Not yet implemented to the repository):
 	 Rename files and directorys
 	 Copy a line of text to clipboard
-	 (kinda working) Edit a line of text in a file.
+	 Edit a line of text in a file.
 	 Create new file and directory
 	 Lunch application
 	 Delete files and directorys
