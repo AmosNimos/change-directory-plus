@@ -128,6 +128,7 @@ def display(directorySelection):
 	global fileSelection
 	#Softwair title
 	#print("~CHANGE DIRECTORY PLUS~")
+	#activity-0-dsp
 	if activity==0:
 		print(colored("Current directory: ["+str(path)+"]",'red'))
 		if(showContent==True):
@@ -148,7 +149,7 @@ def display(directorySelection):
 		else:
 			print(colored("[Empty directory]",'white'))
 		print("--------------------\n")
-	#dsp-a1
+	#activity-1-dsp
 	elif activity==1:
 		#Open file
 		fs = open(grid[directorySelection], 'r')
@@ -275,12 +276,7 @@ def searchingrolling(keypress):
 			debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
 		#start()
 
-	#press r
-	#if keypress == 'r':
-		##might be remap to a more usful action.
-		#showContent= not showContent
-
-	#search index
+	#search directory index
 	if keypress == 'r':
 		searching=True
 		repeat = True
@@ -302,7 +298,7 @@ def searchingrolling(keypress):
 				os.system('clear')
 				print(debug)
 
-	#--------- a0-search  ---------#
+	#--------- activity-0-search  ---------#
 	if keypress == 'f':
 		searching=True
 		search = input("Search: ")
@@ -312,6 +308,7 @@ def searchingrolling(keypress):
 				directorySelection=x
 				searching=False
 				debug="Selection moved to: ["+str(grid[x])+"]"
+				break
 		#Loop trough the grid list to find a file that start with the same character as the search input.
 		if searching:
 			for x in range(len(grid)):
@@ -335,6 +332,13 @@ def viewing(keypress):
 	#--------- activity-1 global variables ---------#
 	global fileSelection
 	global activity
+	global directorySelection
+
+	#get file lines
+	fs = open(grid[directorySelection], 'r')
+	#store lines into an array
+	linelist = fs.readlines()
+	fs.close()
 
 	#press down
 	if keypress == 's' or keypress == 'KEY_DOWN' or keypress == 'j':
@@ -349,27 +353,49 @@ def viewing(keypress):
 	if(keypress == 'a'  or keypress == 'KEY_LEFT' or keypress == 'h'):
 		activity=0
 
-	#--------- activity-1 search  ---------#
+	#search file index
+	if keypress == 'r':
+		searching=True
+		repeat = True
+		while repeat == True:
+			try:
+				search = int(input("Index: "))
+				if search < len(linelist):
+					fileSelection=search
+					repeat=False
+					debug="Selection moved to index: ["+str(search)+"]"
+				else:
+					debug = "I'm sorry "+userName+", I'm afraid I can't acces index ["+str(search)+"]"
+					#Refresh the terminal display
+					os.system('clear')
+					print(debug)
+			except:
+				debug = "Index must be integer."
+				#Refresh the terminal display
+				os.system('clear')
+				print(debug)
+
+	#--------- activity-1-search  ---------#
 	if keypress == 'f':
 		searching=True
 		search = input("Search: ")
-		print(search)
 		#Loop trough the grid list to find a file with the same name as the search input.
+		#currently will find the word even if it is in the middle of another one wich is not ideal. (need to be fix)
 		for x in range(len(linelist)):
-			if str(linelist[x]).lower()==str(search).lower():
+			if str(search).lower() in str(linelist[x]).lower():
 				fileSelection=x
 				searching=False
 				debug="Selection moved to: ["+str(linelist[x]+"]")
+				break
 		#Loop trough the grid list to find a file that start with the same character as the search input.
 		if searching:
 			for x in range(len(linelist)):
-				if len(search)>0 and str(linelist[x])[:1].lower() == search[:1].lower():
+				if  len(search)>0 and str(linelist[x])[:1].lower() == search[:1].lower():
 					fileSelection=x
 					searching=False
 					debug="Selection moved to: ["+str(linelist[x]+"]")
+					exit()
 					break
-		#In case the input is not in the directory.
-		if searching:
 			debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
 			searching=False
 	return fileSelection
