@@ -72,9 +72,12 @@ activity=0
 #----------------------------------------------------------------------------------#
 #arg
 for i in range(len(sys.argv)):
+	if str(sys.argv[i]) == "-h":
+		print("Sorry the info page for cdp is currently not available, use the readme file instead.")
+		debug="Sorry the info page for cdp is currently not available, use the readme file instead."
 	if str(sys.argv[i]) == "-sh":
 		hide=False
-	if str(sys.argv[i]) == "-searching":
+	if str(sys.argv[i]) == "-sc":
 		showContent=True
 
 #----------------------------------------------------------------------------------#
@@ -149,13 +152,14 @@ def display(directorySelection):
 	global fileSelection
 	#Softwair title
 	#print("~CHANGE DIRECTORY PLUS~")
+
 	#activity-0-dsp
 	if activity==0:
+
 		print(colored("Current directory: ["+str(path)+"]",'red'))
 		if(showContent==True):
 			print(colored("List of content: ["+str(os.listdir(path))+"]",'green'))
 		print("")
-
 		print("--------------------")
 		if len(grid)>0:
 			print("")
@@ -170,20 +174,14 @@ def display(directorySelection):
 		else:
 			print(colored("[Empty directory]",'white'))
 		print("--------------------\n")
+
 	#activity-1-dsp
 	elif activity==1:
+
 		#Open file
 		fs = open(grid[directorySelection], 'r')
 		#store lines into an array
 		linelist = fs.readlines()
-
-		#check for empty line
-		#if len(linelist)<1:
-			#file = open(grid[directorySelection], 'w')
-			#file.write("")
-			#file.close()
-			#linelist = fs.readlines()
-
 		fs.close()
 		#loop file cursor
 		#if fileSelection>len(linelist)-1:
@@ -206,7 +204,6 @@ def display(directorySelection):
 				fd=colored("[END]:",'green')
 			else:
 				fd=""
-
 			#if is selected and is within file delimitation
 			if(x == fileSelection and x<len(linelist) and x>=0):
 				#if line is empty
@@ -263,19 +260,21 @@ def searchingrolling(keypress):
 
 	#Go to the Home/user directory
 	if keypress == 'c':
-		#Go up a directory
+		#Go to the home/user a directory
 		try:
 			goHome()
 		except:
-			debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(os.path.dirname(path))+"]."
-		if path == '/':
-			debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
-		#start()
+			debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(path)+"]."
 
 	#press up
 	if keypress == 'w' or keypress == 'KEY_UP' or keypress == 'k':
 		#Move the selection up
 		directorySelection-=1
+
+	#change hidden file viewing variable
+	if keypress == "v":
+		hide=not hide
+		goHome()
 
 	#Go up and down a directory
 	#RIGHT
@@ -291,7 +290,6 @@ def searchingrolling(keypress):
 				#try change activity to edit file
 				if os.path.isfile(oldPath):
 					activity=1
-					#exit()
 				else:
 					debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(grid[directorySelection])+"]."
 		else:
@@ -306,7 +304,6 @@ def searchingrolling(keypress):
 			debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(os.path.dirname(path))+"]."
 		if path == '/':
 			debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
-		#start()
 
 	#search directory index
 	if keypress == 'r':
@@ -330,7 +327,7 @@ def searchingrolling(keypress):
 				os.system('clear')
 				print(debug)
 
-	#--------- activity-0-search  ---------#
+	#--------- search directory name ---------#
 	if keypress == 'f':
 		searching=True
 		search = input("Search: ")
@@ -344,11 +341,19 @@ def searchingrolling(keypress):
 		#Loop trough the grid list to find a file that start with the same character as the search input.
 		if searching:
 			for x in range(len(grid)):
-				if len(search)>0 and str(grid[x])[:1].lower() == search[:1].lower():
-					directorySelection=x
-					searching=False
-					debug="Selection moved to: ["+str(grid[x])+"]"
-					break
+				#ignore the dot in hidden file titles for single character search
+				if(str(grid[x])[:1]!="."):
+					if len(search)>0 and str(grid[x])[0].lower() == search[0].lower():
+						directorySelection=x
+						searching=False
+						debug="Selection moved to: ["+str(grid[x])+"]"
+						break
+				else:
+					if len(search)>0 and str(grid[x])[1].lower() == search[0].lower():
+						directorySelection=x
+						searching=False
+						debug="Selection moved to: ["+str(grid[x])+"]"
+						break
 		#In case the input is not in the directory.
 		if searching:
 			debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
