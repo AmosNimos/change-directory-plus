@@ -5,17 +5,18 @@
 	# DEPENDENCY #
 #----------------------------------------------------------------------------------#
 try:
-	import numpy as np
 	import random as rn
-	from termcolor import colored
 	#to acces directory path
 	import os
 	import sys
 	import signal
 	#to get user keyboard input
-	from curtsies import Input
 	#to get user name
 	import getpass
+	import numpy as np
+	import pyperclip
+	from termcolor import colored
+	from curtsies import Input
 except:
 	print("Missing dependency")
 	try:
@@ -23,6 +24,7 @@ except:
 		os.system("pip3 install numpy")
 		os.system("pip3 install termcolor")
 		os.system("pip3 install curtsies")
+		os.system("pip3 install pyperclip")
 	except:
 		print("The missing dependency could not be acquired.")
 		print("(Be sure to have pip3 installed)")
@@ -370,6 +372,7 @@ def viewing(keypress):
 	global fileSelection
 	global activity
 	global directorySelection
+	global debug
 
 	#get file lines
 	fs = open(grid[directorySelection], 'r')
@@ -389,6 +392,13 @@ def viewing(keypress):
 	#press left
 	if(keypress == 'a'  or keypress == 'KEY_LEFT' or keypress == 'h'):
 		activity=0
+
+	#copy line to clip board
+	if keypress == "c":
+		pyperclip.copy(linelist[fileSelection].strip('\n'))
+		print("index ["+str(fileSelection)+"] copyed to clipboard")
+		debug = "index ["+str(fileSelection)+"] copyed to clipboard"
+		#spam = pyperclip.paste()
 
 	#search file index
 	if keypress == 'r':
