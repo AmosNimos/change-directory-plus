@@ -18,16 +18,20 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 	Move into selected directory = a
 	Move out of current directory = d
 	Enter directory = e
-	Show/hide directory content = r
 	Quit terminal = escape
 	exit cdp = q
 	Search file name = f
+	Search index integer = r
 	
 ## Alternative keys
 	Move selection up = up arrow
+	Move selection up = k
 	Move selection down = down arrow
+	Move selection up = j
 	Move into selected directory = right arrow
+	Move into selected directory = l
 	Move out of current directory = left arrow
+	Move out of current directory = left h
 	Enter directory = enter
 
 ## Tips
