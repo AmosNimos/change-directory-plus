@@ -118,6 +118,27 @@ def goup():
 		del directoryLog[-1]
 	return directorySelection
 
+#set the path to the home/user directory
+def goHome():
+	global path
+	global directoryLog
+	global directorySelection
+	path = "/home/"+userName
+	files = os.listdir(path)
+	global grid
+	grid = []
+	for x in files:
+		if x[:1]==".":
+			if hide == False:
+				grid.append(x)
+		else:
+			grid.append(x)
+	grid.sort(key=str.casefold)
+	if len(directoryLog)>0:
+		directorySelection = directoryLog[-1]
+		del directoryLog[-1]
+	return directorySelection
+
 
 #----------------------------------------------------------------------------------#
 	# DISPLAY #
@@ -239,6 +260,17 @@ def searchingrolling(keypress):
 	if keypress == 's' or keypress == 'KEY_DOWN' or keypress == 'j':
 		#Move the selection down
 		directorySelection+=1
+
+	#Go to the Home/user directory
+	if keypress == 'c':
+		#Go up a directory
+		try:
+			goHome()
+		except:
+			debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(os.path.dirname(path))+"]."
+		if path == '/':
+			debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
+		#start()
 
 	#press up
 	if keypress == 'w' or keypress == 'KEY_UP' or keypress == 'k':
