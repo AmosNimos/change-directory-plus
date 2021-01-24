@@ -1,0 +1,9 @@
+random
+os
+sys
+signal
+getpass
+numpy
+pyperclip
+termcolor
+curtsies
