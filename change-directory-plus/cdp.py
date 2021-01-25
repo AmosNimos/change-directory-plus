@@ -185,7 +185,7 @@ def display(directorySelection):
 				try:
 					selectionName = grid[x]
 					if len(str(selectionName))<nameSizeLimit:
-						toAdd = nameSizeLimit-len(str(grid[x])))
+						toAdd = nameSizeLimit-len(str(grid[x]))
 						selectionName = selectionName+(toAdd*" ")
 					if len(str(selectionName))>nameSizeLimit:
 						selectionName = selectionName[0:nameSizeLimit-3]+"..."
