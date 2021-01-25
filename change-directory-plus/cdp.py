@@ -76,6 +76,8 @@ activity=0
 #contain the sudo command if sudo is activated
 sudoMode=""
 
+nameSizeLimit= 16
+
 #theme color
 textColor = "red"
 highLights = "white"
@@ -171,32 +173,43 @@ def display(directorySelection):
 
 	#activity-0-dsp
 	if activity==0:
-
-		cprint(colored("Current directory: ["+str(path)+"]",textColor))
+		print(" Change Directory Plus")
+		#print("")
+		#cprint(colored(" Current directory: ["+str(path)+"]",textColor))
 		if(showContent==True):
-			print(colored("List of content: ["+str(os.listdir(path))+"]",'green'))
-		print("")
-		print("--------------------")
+			print(colored("| List of content: ["+str(os.listdir(path))+"]",'green'))
+		#print("")
+		print(" +"+(nameSizeLimit+7)*"-"+"+")
 		if len(grid)>0:
-			print("")
 			for x in range(directorySelection-2,directorySelection+3):
+				try:
+					selectionName = grid[x]
+					if len(str(selectionName))<nameSizeLimit:
+						toAdd = nameSizeLimit-len(str(grid[x])))
+						selectionName = selectionName+(toAdd*" ")
+					if len(str(selectionName))>nameSizeLimit:
+						selectionName = selectionName[0:nameSizeLimit-3]+"..."
+				except:
+					selectionName=""
 				if(x == directorySelection and x<len(grid) and x>=0):
 					#print(colored(" "+str(directorySelection)+" -> ["+str(grid[x])+"]\n",'red'))
 					if os.path.isdir(grid[directorySelection]):
-						cprint("📁 "+str(directorySelection)+" -> ["+str(grid[x])+"]\n", textColor, highLights)
+						cprint(" |"+"📁 "+str(directorySelection)+" ["+str(selectionName)+"]"+"|", textColor, highLights)
 					else:
-						cprint("📄 "+str(directorySelection)+" -> ["+str(grid[x])+"]\n", textColor, highLights)
+						cprint(" |"+"📄 "+str(directorySelection)+" ["+str(selectionName)+"]"+"|", textColor, highLights)
 				else:
 					if x<len(grid) and x>=0:
 						if os.path.isdir(grid[x]):
-							print(colored("📁 "+str(x)+" ("+str(grid[x])+")\n",textColor))
+							print(" |"+colored("📁 "+str(x)+" ("+str(selectionName)+")",textColor)+"|")
 						else:
-							print(colored("📄 "+str(x)+" ("+str(grid[x])+")\n",textColor))
+							print(" |"+colored("📄 "+str(x)+" ("+str(selectionName)+")",textColor)+"|")
 					else:
-						print(colored("🚫 - (-)\n",textColor))
+						print(colored(" |"+"🚫 - ("+nameSizeLimit*" "+")"+"|",textColor))
 		else:
 			print(colored("[Empty directory]",textColor))
-		print("--------------------\n")
+		print(" +"+(nameSizeLimit+7)*"-"+"+")
+		cprint(colored(" Current directory: ["+str(path)+"]",textColor))
+		print(colored(" Current selection: ["+grid[x-2]+"]\n",textColor))
 
 	#activity-1-dsp
 	elif activity==1:
