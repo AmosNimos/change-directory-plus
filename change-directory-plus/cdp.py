@@ -5,37 +5,41 @@
 	# DEPENDENCY #
 #----------------------------------------------------------------------------------#
 try:
+	#from The Python Standard Library
 	import random as rn
-	#to acces directory path
 	import os
 	import sys
 	import signal
-	#to get user keyboard input
-	#to get user name
+	#External library
 	import getpass
 	import numpy as np
 	import pyperclip
-	from termcolor import colored
+	from termcolor import colored, cprint
 	from curtsies import Input
 except:
-	print("Missing dependency")
-	try:
-		print("Attempting to acquire missing dependency, please wait.")
-		os.system("pip3 install numpy")
-		os.system("pip3 install termcolor")
-		os.system("pip3 install curtsies")
-		os.system("pip3 install pyperclip")
-	except:
-		print("The missing dependency could not be acquired.")
-		print("(Be sure to have pip3 installed)")
+	print("--------------------")
+	print("Missing dependency error!")
+	print("")
+	print("Manual installation:")
+	print("pip3 install requirement.txt")
+	print("--------------------")
+	"""
+	print("Install the missing dependency automatically (N/y):")
+	userInput = input().lower()[0]
+	if userInput == "y":
+		try:
+			print("Attempting to acquire missing dependency, please wait.")
+			os.system("pip3 install requirement.txt")
+		except:
+			print("The missing dependency could not be acquired.")
+	"""
 	exit()
 
 #----------------------------------------------------------------------------------#
 	# VARIABLES #
 #----------------------------------------------------------------------------------#
 #var
-#Get username for debug
-#btw (is optional)
+#Get username for debug and acces home/user directory
 userName = str(getpass.getuser())
 
 #Softwair title
@@ -69,6 +73,14 @@ hide=True
 #2=line editing
 activity=0
 
+#contain the sudo command if sudo is activated
+sudoMode=""
+
+#theme color
+textColor = "red"
+highLights = "white"
+if highLights != "":
+	highLights = "on_"+highLights
 #----------------------------------------------------------------------------------#
 	# ARGUMENTS #
 #----------------------------------------------------------------------------------#
@@ -81,6 +93,8 @@ for i in range(len(sys.argv)):
 		hide=False
 	if str(sys.argv[i]) == "-sc":
 		showContent=True
+	if str(sys.argv[i]) == "-sudo":
+		sudoMode="sudo"
 
 #----------------------------------------------------------------------------------#
 	# PATH #
@@ -158,23 +172,30 @@ def display(directorySelection):
 	#activity-0-dsp
 	if activity==0:
 
-		print(colored("Current directory: ["+str(path)+"]",'red'))
+		cprint(colored("Current directory: ["+str(path)+"]",textColor, highLights))
 		if(showContent==True):
 			print(colored("List of content: ["+str(os.listdir(path))+"]",'green'))
 		print("")
 		print("--------------------")
 		if len(grid)>0:
 			print("")
-			for x in range(directorySelection-2,directorySelection+2):
+			for x in range(directorySelection-2,directorySelection+3):
 				if(x == directorySelection and x<len(grid) and x>=0):
-					print(colored(" "+str(directorySelection)+" -> ["+str(grid[x])+"]\n",'red'))
+					#print(colored(" "+str(directorySelection)+" -> ["+str(grid[x])+"]\n",'red'))
+					if os.path.isdir(grid[x]):
+						cprint("📁 "+str(directorySelection)+" -> ["+str(grid[x])+"]\n", textColor, highLights)
+					else:
+						cprint("📄 "+str(directorySelection)+" -> ["+str(grid[x])+"]\n", textColor, highLights)
 				else:
 					if x<len(grid) and x>=0:
-						print(colored(" "+str(x)+" ("+str(grid[x])+")\n",'white'))
+						if os.path.isdir(grid[x]):
+							print(colored("📁 "+str(x)+" ("+str(grid[x])+")\n",textColor))
+						else:
+							print(colored("📄 "+str(x)+" ("+str(grid[x])+")\n",textColor))
 					else:
-						print(colored(" - (-)\n",'white'))
+						print(colored("🚫 - (-)\n",textColor))
 		else:
-			print(colored("[Empty directory]",'white'))
+			print(colored("[Empty directory]",textColor))
 		print("--------------------\n")
 
 	#activity-1-dsp
@@ -261,7 +282,7 @@ def searchingrolling(keypress):
 		directorySelection+=1
 
 	#Go to the Home/user directory
-	if keypress == 'c':
+	if keypress == 't':
 		#Go to the home/user a directory
 		try:
 			goHome()
@@ -308,7 +329,7 @@ def searchingrolling(keypress):
 			debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
 
 	#search directory index
-	if keypress == 'r':
+	if keypress == 'i':
 		searching=True
 		repeat = True
 		while repeat == True:
@@ -366,7 +387,7 @@ def searchingrolling(keypress):
 	# ACTIVITY 1 #
 #----------------------------------------------------------------------------------#
 #a1
-#moving around file
+#viewing file content
 def viewing(keypress):
 	#--------- activity-1 global variables ---------#
 	global fileSelection
@@ -384,7 +405,6 @@ def viewing(keypress):
 	if keypress == 's' or keypress == 'KEY_DOWN' or keypress == 'j':
 		#Move the selection down
 		fileSelection+=1
-
 	#press up
 	if keypress == 'w' or keypress == 'KEY_UP' or keypress == 'k':
 		#Move the selection up
@@ -393,7 +413,7 @@ def viewing(keypress):
 	if(keypress == 'a'  or keypress == 'KEY_LEFT' or keypress == 'h'):
 		activity=0
 
-	#copy line to clip board
+	#copy line to clipboard
 	if keypress == "c":
 		pyperclip.copy(linelist[fileSelection].strip('\n'))
 		print("index ["+str(fileSelection)+"] copyed to clipboard")
@@ -401,7 +421,7 @@ def viewing(keypress):
 		#spam = pyperclip.paste()
 
 	#search file index
-	if keypress == 'r':
+	if keypress == 'i':
 		searching=True
 		repeat = True
 		while repeat == True:
@@ -494,11 +514,11 @@ while True:
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
 		if os.path.isdir(newPath):
-			os.system("gnome-terminal --working-directory="+newPath)
+			os.system(sudoMode+"gnome-terminal --working-directory="+newPath)
 			os.kill(os.getppid(), signal.SIGHUP)
 			exit()
 		elif os.path.isdir(path):
-			os.system("gnome-terminal --working-directory="+str(path))
+			os.system(sudoMode+"gnome-terminal --working-directory="+str(path))
 			os.kill(os.getppid(), signal.SIGHUP)
 			exit()
 		else:
@@ -512,11 +532,11 @@ while True:
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
 		if os.path.isdir(newPath):
-			os.system("gnome-terminal --working-directory="+newPath)
+			os.system(sudoMode+"gnome-terminal --working-directory="+newPath)
 		elif os.path.isdir(path):
-			os.system("gnome-terminal --working-directory="+str(path))
+			os.system(sudoMode+"gnome-terminal --working-directory="+str(path))
 		else:
-			debug = "I'm sorry "+str(userName)+", I can't open ["+str(grid[directorySelection])+"]."
+			debug = "I'm sorry "+str(userName)+", I can't open ["+oldPath+"]."
 			print(debug)
 			exit()
 
@@ -526,9 +546,58 @@ while True:
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
 		try:
-			os.system("xdg-open " + newPath)
+			os.system(sudoMode+" xdg-open " + newPath)
+			start()
 		except:
-			debug = "I'm sorry "+str(userName)+", I can't open ["+str(grid[directorySelection])+"]."
+			debug = "I'm sorry "+str(userName)+", I can't open ["+oldPath+"]."
+			print(str(Exception))
+			print(debug)
+			exit()
+
+#os.mkdir(path)
+
+	#create directory
+	if keypress == 'g':
+		#Enter the currently selected directory
+		newPath=str(path)+"/"+str(grid[directorySelection])
+		oldPath=str(grid[directorySelection])
+		try:
+			print("How do you whant to name this new directory: ")
+			directoryName = str(input())
+			os.mkdir(directoryName)
+			debug = oldPath+" was successfully created"
+			start()
+		except:
+			debug = "I'm sorry "+str(userName)+", directory "+directoryName+" could not be created"
+			print(debug)
+			exit()
+
+	#Delete file
+	if keypress == 'r':
+		#Enter the currently selected directory
+		newPath=str(path)+"/"+str(grid[directorySelection])
+		oldPath=str(grid[directorySelection])
+		try:
+			if os.path.isdir(path):
+				print("are you sure you whant to delete "+oldPath+" (y/n)?: ")
+				userInput = input().lower()[0]
+				if userInput == "y":
+					os.rmdir(oldPath)
+					start()
+					debug = oldPath+" was successfully deleted"
+				else:
+					debug = oldPath+" deletion as been aborted"
+			else:
+				print("are you sure you whant to delete "+oldPath+" (y/n)?: ")
+				userInput = input().lower()[0]
+				if userInput == "y":
+					os.remove(oldPath)
+					start()
+					debug = oldPath+" was successfully deleted"
+				else:
+					debug = oldPath+" deletion as been aborted"
+		except:
+			debug = "I'm sorry "+str(userName)+", I can't delete ["+str(grid[directorySelection])+"]."
 			print(debug)
 			exit()
 
