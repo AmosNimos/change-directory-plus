@@ -172,7 +172,7 @@ def display(directorySelection):
 	#activity-0-dsp
 	if activity==0:
 
-		cprint(colored("Current directory: ["+str(path)+"]",textColor, highLights))
+		cprint(colored("Current directory: ["+str(path)+"]",textColor))
 		if(showContent==True):
 			print(colored("List of content: ["+str(os.listdir(path))+"]",'green'))
 		print("")
@@ -182,7 +182,7 @@ def display(directorySelection):
 			for x in range(directorySelection-2,directorySelection+3):
 				if(x == directorySelection and x<len(grid) and x>=0):
 					#print(colored(" "+str(directorySelection)+" -> ["+str(grid[x])+"]\n",'red'))
-					if os.path.isdir(grid[x]):
+					if os.path.isdir(grid[directorySelection]):
 						cprint("📁 "+str(directorySelection)+" -> ["+str(grid[x])+"]\n", textColor, highLights)
 					else:
 						cprint("📄 "+str(directorySelection)+" -> ["+str(grid[x])+"]\n", textColor, highLights)
@@ -323,6 +323,8 @@ def searchingrolling(keypress):
 		#Go up a directory
 		try:
 			goup()
+			os.chdir(str(path))
+
 		except:
 			debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(os.path.dirname(path))+"]."
 		if path == '/':
