@@ -78,9 +78,30 @@ sudoMode=""
 
 nameSizeLimit= 16
 
+#Text colors options:
+#grey
+#red
+#green
+#yellow
+#blue
+#magenta
+#cyan
+#white
+
+#Text highlights options:
+#grey
+#red
+#green
+#yellow
+#blue
+#magenta
+#cyan
+#white
+
 #theme color
 textColor = "red"
 highLights = "white"
+
 if highLights != "":
 	highLights = "on_"+highLights
 #----------------------------------------------------------------------------------#
@@ -209,7 +230,7 @@ def display(directorySelection):
 			print(colored("[Empty directory]",textColor))
 		print(" +"+(nameSizeLimit+7)*"-"+"+")
 		cprint(colored(" Current directory: ["+str(path)+"]",textColor))
-		print(colored(" Current selection: ["+grid[x-2]+"]\n",textColor))
+		print(colored(" Current selection: ["+grid[x-2]+"]",textColor))
 
 	#activity-1-dsp
 	elif activity==1:
@@ -364,6 +385,15 @@ def searchingrolling(keypress):
 				#Refresh the terminal display
 				os.system('clear')
 				print(debug)
+
+	#--------- search directory name ---------#
+	if keypress == 'y':
+		searching=True
+		print("Current folder name "+str(grid[directorySelection]))
+		renaming = input("Rename to: ")
+		os.rename(str(grid[directorySelection]),str(renaming))
+		searching=False
+		start()
 
 	#--------- search directory name ---------#
 	if keypress == 'f':
