@@ -393,6 +393,7 @@ def searchingrolling(keypress):
 		renaming = input("Rename to: ")
 		os.rename(str(grid[directorySelection]),str(renaming))
 		searching=False
+		os.system('clear')
 		start()
 
 	#--------- search directory name ---------#
@@ -404,6 +405,7 @@ def searchingrolling(keypress):
 			if str(grid[x]).lower()==str(search).lower():
 				directorySelection=x
 				searching=False
+				os.system('clear')
 				debug="Selection moved to: ["+str(grid[x])+"]"
 				break
 		#Loop trough the grid list to find a file that start with the same character as the search input.
@@ -414,6 +416,7 @@ def searchingrolling(keypress):
 					if len(search)>0 and str(grid[x])[0].lower() == search[0].lower():
 						directorySelection=x
 						searching=False
+						os.system('clear')
 						debug="Selection moved to: ["+str(grid[x])+"]"
 						break
 				else:
@@ -656,7 +659,7 @@ while True:
 	display(directorySelection)
 
 	#display debug text to the terminal
-	print(debug)
+	print(" "+debug)
 
 	#reset debug text to an empty string
 	debug=""
