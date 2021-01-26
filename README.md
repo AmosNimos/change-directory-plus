@@ -23,6 +23,7 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 	Search index integer = r
 	return to the home/user directory = c
 	show/hide hidden directory = v
+	Rename files and directorys = y
 	
 ## Alternative keys
 	Move selection up = up arrow
@@ -46,10 +47,10 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 	(not yet available)
 
 ## Features currently in development (Not yet implemented to the repository):
-	 Rename files and directorys
 	 Edit a line of text in a file.
 	 Create new file
 	 Lunch application
+	 (working) Rename files and directorys
 	 (working) Copy a line of text to clipboard
 	 (working) Create new directory
 	 (working) Delete files and directorys
