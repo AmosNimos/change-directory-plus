@@ -9,8 +9,7 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=3SZVAQAEVAT6Q)
 
 ## Screenshot
-![](cdp_screenshot/cdp_screen_001.png)
-![](cdp_screenshot/cdp_screen_002.png)
+![](cdp_screenshot/cdp_001.png)
 
 ## How to use
 	Move selection up = w
@@ -48,11 +47,12 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 
 ## Features currently in development (Not yet implemented to the repository):
 	 Rename files and directorys
-	 Copy a line of text to clipboard
 	 Edit a line of text in a file.
-	 Create new file and directory
+	 Create new file
 	 Lunch application
-	 Delete files and directorys
+	 (working) Copy a line of text to clipboard
+	 (working) Create new directory
+	 (working) Delete files and directorys
 	 (working) Open a terminal at a (selected directory) without closing cdp.
 	 (working) Open the directory and file with the default gui file manager
 	 (working) Vim keys (H,J,K,L)
