@@ -4,7 +4,12 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 ## Meta
 	CDP is a user friendly way to navigate directorys inside the terminal 
 
-| Help to support this project with a Paypal donation to AKUMA |
+| Help to support this project with a liberapay donation |
+
+[![](https://liberapay.com/assets/widgets/donate.svg)](
+https://liberapay.com/Amos_Nimos/donate)
+
+| Help to support this project with a Paypal donation |
 
 [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=3SZVAQAEVAT6Q)
 
