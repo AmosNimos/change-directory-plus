@@ -4,15 +4,6 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 ## Meta
 	CDP is a user friendly way to navigate directorys inside the terminal 
 
-| Help to support this project with a liberapay donation |
-
-[![](https://liberapay.com/assets/widgets/donate.svg)](
-https://liberapay.com/Amos_Nimos/donate)
-
-| Help to support this project with a Paypal donation |
-
-[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/amosnimos?locale.x=en_US)
-
 
 ## Screenshot
 ![](cdp_screenshot/cdp_001.png)
@@ -69,5 +60,14 @@ https://liberapay.com/Amos_Nimos/donate)
 
 ## Release History
 	Alpha
+	
+| Help to support this project with a liberapay donation |
+
+[![](https://liberapay.com/assets/widgets/donate.svg)](
+https://liberapay.com/Amos_Nimos/donate)
+
+| Help to support this project with a Paypal donation |
+
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/amosnimos?locale.x=en_US)
 	
 AKUMA open source project by Amos Nimos
