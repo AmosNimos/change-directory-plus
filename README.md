@@ -25,6 +25,10 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 	show/hide hidden directory = v
 	Rename files and directorys = y
 	
+	#in file viewing mode only
+	copy line of text in file = c
+	copy complete file = u
+	
 ## Alternative keys
 	Move selection up = up arrow
 	Move selection up = k
@@ -47,7 +51,6 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 	(not yet available)
 
 ## Features currently in development (Not yet implemented to the repository):
-	 Edit a line of text in a file.
 	 Create new file
 	 Lunch application
 	 (working) Rename files and directorys
