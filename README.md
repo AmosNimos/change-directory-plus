@@ -11,7 +11,8 @@ https://liberapay.com/Amos_Nimos/donate)
 
 | Help to support this project with a Paypal donation |
 
-[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=3SZVAQAEVAT6Q)
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/amosnimos?locale.x=en_US)
+
 
 ## Screenshot
 ![](cdp_screenshot/cdp_001.png)
