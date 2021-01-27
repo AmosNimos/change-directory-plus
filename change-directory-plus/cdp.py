@@ -386,7 +386,7 @@ def searchingrolling(keypress):
 				os.system('clear')
 				print(debug)
 
-	#--------- search directory name ---------#
+	#--------- change directory name ---------#
 	if keypress == 'y':
 		searching=True
 		print("Current folder name "+str(grid[directorySelection]))
@@ -461,11 +461,24 @@ def viewing(keypress):
 	if(keypress == 'a'  or keypress == 'KEY_LEFT' or keypress == 'h'):
 		activity=0
 
+	if keypress == 'd' or keypress == 'KEY_RIGHT':
+		activity=2
+
 	#copy line to clipboard
 	if keypress == "c":
-		pyperclip.copy(linelist[fileSelection].strip('\n'))
+		pyperclip.copy(linelist.strip('\n'))
 		print("index ["+str(fileSelection)+"] copyed to clipboard")
 		debug = "index ["+str(fileSelection)+"] copyed to clipboard"
+		#spam = pyperclip.paste()
+
+	#copy file to clipboard
+	if keypress == "u":
+		completelist=""
+		for x in linelist:
+			completelist += str(x)
+		#pyperclip.copy(linelist[fileSelection].strip('\n'))
+		pyperclip.copy(str(completelist))
+		debug = "file copyed to clipboard"
 		#spam = pyperclip.paste()
 
 	#search file index
@@ -520,8 +533,33 @@ def viewing(keypress):
 #----------------------------------------------------------------------------------#
 #a2
 #editing file line
+def editing(keypress):
+	global activity
+	#print("Please press [Enter] to confirm.")
+	lineText=str(input("With: "))
+	file = open(grid[xx], "r")
+	f = file.readlines()
+	fs = len(f)
 
-### In development
+	newText=""
+	for x in range(fs):
+		if x == yy:
+			newText+=str(lineText)+"\n"
+		else:
+			newText+=str(f[x])
+	file.close()
+	#newText="BAAM"
+	debug=newText
+	print(newText)
+	file = open(grid[xx], 'w')
+	file.write("")
+	file.close()
+	file = open(grid[xx], 'a')
+	file.write(newText)
+	file.close()
+	#file[yy]=linelist[yy]
+	activity=1
+	display(xx)
 
 #----------------------------------------------------------------------------------#
 	# LOOP #
@@ -657,6 +695,10 @@ while True:
 
 	#Display directory
 	display(directorySelection)
+
+	#editing line activity
+	if activity==2:
+		editing(keypress)
 
 	#display debug text to the terminal
 	print(" "+debug)
