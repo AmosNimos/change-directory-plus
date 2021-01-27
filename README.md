@@ -61,7 +61,7 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 ## Release History
 	Alpha
 	
-| Help to support this project with a liberapay donation |
+| Help to support this project with a Liberapay donation |
 
 [![](https://liberapay.com/assets/widgets/donate.svg)](
 https://liberapay.com/Amos_Nimos/donate)
