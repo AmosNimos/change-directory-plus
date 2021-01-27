@@ -104,6 +104,9 @@ highLights = "white"
 
 if highLights != "":
 	highLights = "on_"+highLights
+
+marginX = "  "
+
 #----------------------------------------------------------------------------------#
 	# ARGUMENTS #
 #----------------------------------------------------------------------------------#
@@ -194,8 +197,8 @@ def display(directorySelection):
 
 	#activity-0-dsp
 	if activity==0:
+		print("")
 		print(" Change Directory Plus")
-		#print("")
 		#cprint(colored(" Current directory: ["+str(path)+"]",textColor))
 		if(showContent==True):
 			print(colored("| List of content: ["+str(os.listdir(path))+"]",'green'))
@@ -215,17 +218,17 @@ def display(directorySelection):
 				if(x == directorySelection and x<len(grid) and x>=0):
 					#print(colored(" "+str(directorySelection)+" -> ["+str(grid[x])+"]\n",'red'))
 					if os.path.isdir(grid[directorySelection]):
-						cprint(" |"+"📁 "+str(directorySelection)+" ["+str(selectionName)+"]"+"|", textColor, highLights)
+						cprint(marginX+"|"+"📁 "+str(directorySelection)+" ["+str(selectionName)+"]"+"|", textColor, highLights)
 					else:
-						cprint(" |"+"📄 "+str(directorySelection)+" ["+str(selectionName)+"]"+"|", textColor, highLights)
+						cprint(marginX+"|"+"📄 "+str(directorySelection)+" ["+str(selectionName)+"]"+"|", textColor, highLights)
 				else:
 					if x<len(grid) and x>=0:
 						if os.path.isdir(grid[x]):
-							print(" |"+colored("📁 "+str(x)+" ("+str(selectionName)+")",textColor)+"|")
+							print(marginX+"|"+colored("📁 "+str(x)+" ("+str(selectionName)+")",textColor)+"|")
 						else:
-							print(" |"+colored("📄 "+str(x)+" ("+str(selectionName)+")",textColor)+"|")
+							print(marginX+"|"+colored("📄 "+str(x)+" ("+str(selectionName)+")",textColor)+"|")
 					else:
-						print(colored(" |"+"🚫 - ("+nameSizeLimit*" "+")"+"|",textColor))
+						print(colored(marginX+"|"+"🚫 - ("+nameSizeLimit*" "+")"+"|",textColor))
 		else:
 			print(colored("[Empty directory]",textColor))
 		print(" +"+(nameSizeLimit+7)*"-"+"+")
@@ -233,6 +236,7 @@ def display(directorySelection):
 		print(colored(" Current selection: ["+grid[x-2]+"]",textColor))
 
 	#activity-1-dsp
+	#view file content
 	elif activity==1:
 
 		#Open file
@@ -246,7 +250,6 @@ def display(directorySelection):
 		if fileSelection<0:
 			fileSelection=len(linelist)-1
 		print(colored("Current file: ["+str(grid[directorySelection])+"]",'red'))
-		print("")
 		print("--------------------")
 		#remove end line.
 		for i in range(len(linelist)):
@@ -267,17 +270,30 @@ def display(directorySelection):
 				if(str(linelist[x])==""):
 					print(fd+colored(" "+str(x)+" ()\n",'red'))
 				else:
-					print(fd+colored(" "+str(x)+" -> ["+str(linelist[x]).strip()+"]\n",'red'))
+					print(fd+colored(" "+str(x)+" -> ["+str(linelist[x]).strip()+"]",'red'))
 			else:
 				if x<len(linelist) and x>=0 and str(linelist[x])!="":
-					print(fd+colored(" "+str(x)+" ("+str(linelist[x])+")\n",'white'))
+					print(fd+colored(" "+str(x)+" ("+str(linelist[x])+")",'white'))
 				elif x == fileSelection:
-					print(fd+colored(" "+str(x)+" ()\n",'red'))
+					print(fd+colored(" "+str(x)+" ()",'red'))
 				elif x>=0:
-					print(fd+colored(" "+str(x)+" ()\n",'white'))
+					print(fd+colored(" "+str(x)+" ()",'white'))
 				else:
-					print(colored(" - (-)\n",'white'))
-		print("--------------------\n")
+					print(colored(" - (-)",'white'))
+		print("--------------------")
+	#activity-2-dsp
+	#Edit line text
+	elif activity==2:
+		fs = open(grid[directorySelection], 'r')
+		#store lines into an array
+		linelist = fs.readlines()
+		#debug=fs.read()
+		fs.close()
+		print(colored("Edit line: ["+str(fileSelection)+"]",'red'))
+		print("")
+		print("--------------------")
+		print("Replace: "+str(linelist[fileSelection]).strip())
+		print("--------------------")
 	return fileSelection
 
 #----------------------------------------------------------------------------------#
@@ -363,6 +379,10 @@ def searchingrolling(keypress):
 			debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(os.path.dirname(path))+"]."
 		if path == '/':
 			debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
+
+	if keypress == 'u':
+		pyperclip.copy(str(path)+"/"+str(grid[directorySelection]))
+		debug = "path copyed to clipboard"
 
 	#search directory index
 	if keypress == 'i':
@@ -537,13 +557,13 @@ def editing(keypress):
 	global activity
 	#print("Please press [Enter] to confirm.")
 	lineText=str(input("With: "))
-	file = open(grid[xx], "r")
+	file = open(grid[directorySelection], "r")
 	f = file.readlines()
 	fs = len(f)
 
 	newText=""
 	for x in range(fs):
-		if x == yy:
+		if x == fileSelection:
 			newText+=str(lineText)+"\n"
 		else:
 			newText+=str(f[x])
@@ -551,15 +571,15 @@ def editing(keypress):
 	#newText="BAAM"
 	debug=newText
 	print(newText)
-	file = open(grid[xx], 'w')
+	file = open(grid[directorySelection], 'w')
 	file.write("")
 	file.close()
-	file = open(grid[xx], 'a')
+	file = open(grid[directorySelection], 'a')
 	file.write(newText)
 	file.close()
-	#file[yy]=linelist[yy]
 	activity=1
-	display(xx)
+	os.system('clear')
+	display(directorySelection)
 
 #----------------------------------------------------------------------------------#
 	# LOOP #
