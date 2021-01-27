@@ -21,6 +21,7 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 	return to the home/user directory = c
 	show/hide hidden directory = v
 	Rename files and directorys = y
+	copy path to selection = u
 	
 	#in file viewing mode only
 	copy line of text in file = c
