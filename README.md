@@ -51,16 +51,9 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 ## Features currently in development (Not yet implemented to the repository):
 	 Create new file
 	 Lunch application
-	 (working) Rename files and directorys
-	 (working) Copy a line of text to clipboard
-	 (working) Create new directory
-	 (working) Delete files and directorys
-	 (working) Open a terminal at a (selected directory) without closing cdp.
-	 (working) Open the directory and file with the default gui file manager
-	 (working) Vim keys (H,J,K,L)
 
 ## Release History
-	Alpha
+	pre-Alpha
 	
 | Help to support this project with a Liberapay donation |
 
