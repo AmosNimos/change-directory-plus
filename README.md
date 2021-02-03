@@ -26,14 +26,10 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 	create directory = g
 	
 ## Alternative keys
-	Move selection up = up arrow
-	Move selection up = k
-	Move selection down = down arrow
-	Move selection up = j
-	Move into selected directory = right arrow
-	Move into selected directory = l
-	Move out of current directory = left arrow
-	Move out of current directory = left h
+	Move selection up = up-arrow or k
+	Move selection down = down-arrow or j
+	Move into selected directory = right-arrow or l
+	Move out of current directory = left-arrow or h
 	Enter directory = enter
 
 ## Tips
