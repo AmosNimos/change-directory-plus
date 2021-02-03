@@ -319,11 +319,27 @@ def searchingrolling(keypress):
 		if path == '/':
 			debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
 
+	#--------- copy selection path---------#
 	if keypress == 'u':
 		pyperclip.copy(str(path)+"/"+str(grid[directorySelection]))
 		debug = "path copyed to clipboard"
 
-	#search directory index
+	#--------- creat empty file---------#
+	if keypress == 'p':
+		#Enter the currently selected directory
+		newPath=str(path)+"/"+str(grid[directorySelection])
+		oldPath=str(grid[directorySelection])
+		try:
+			print("How do you whant to name this new file: ")
+			directoryName = str(input())
+			os.system("nano "+directoryName)
+			start()
+		except:
+			debug = "I'm sorry "+str(userName)+", the file "+directoryName+" could not be created"
+			print(debug)
+			exit()
+
+	#--------- change directory index ---------#
 	if keypress == 'i':
 		searching=True
 		repeat = True
@@ -388,6 +404,8 @@ def searchingrolling(keypress):
 		if searching:
 			debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
 			searching=False
+
+
 	return directorySelection
 
 #----------------------------------------------------------------------------------#
@@ -480,7 +498,7 @@ while True:
 			debug = oldPath+" was successfully created"
 			start()
 		except:
-			debug = "I'm sorry "+str(userName)+", directory "+directoryName+" could not be created"
+			debug = "I'm sorry "+str(userName)+", the directory "+directoryName+" could not be created"
 			print(debug)
 			exit()
 
