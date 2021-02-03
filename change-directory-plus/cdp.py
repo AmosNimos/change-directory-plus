@@ -196,104 +196,44 @@ def display(directorySelection):
 	#print("~CHANGE DIRECTORY PLUS~")
 
 	#activity-0-dsp
-	if activity==0:
-		print("")
-		print(" Change Directory Plus")
-		#cprint(colored(" Current directory: ["+str(path)+"]",textColor))
-		if(showContent==True):
-			print(colored("| List of content: ["+str(os.listdir(path))+"]",'green'))
-		#print("")
-		print(" +"+(nameSizeLimit+7)*"-"+"+")
-		if len(grid)>0:
-			for x in range(directorySelection-2,directorySelection+3):
-				try:
-					selectionName = grid[x]
-					if len(str(selectionName))<nameSizeLimit:
-						toAdd = nameSizeLimit-len(str(grid[x]))
-						selectionName = selectionName+(toAdd*" ")
-					if len(str(selectionName))>nameSizeLimit:
-						selectionName = selectionName[0:nameSizeLimit-3]+"..."
-				except:
-					selectionName=""
-				if(x == directorySelection and x<len(grid) and x>=0):
-					#print(colored(" "+str(directorySelection)+" -> ["+str(grid[x])+"]\n",'red'))
-					if os.path.isdir(grid[directorySelection]):
-						cprint(marginX+"|"+"📁 "+str(directorySelection)+" ["+str(selectionName)+"]"+"|", textColor, highLights)
-					else:
-						cprint(marginX+"|"+"📄 "+str(directorySelection)+" ["+str(selectionName)+"]"+"|", textColor, highLights)
+	print("")
+	print(marginX+"Change Directory Plus")
+	#cprint(colored(" Current directory: ["+str(path)+"]",textColor))
+	if(showContent==True):
+		print(colored("| List of content: ["+str(os.listdir(path))+"]",'green'))
+	#print("")
+	print(marginX+"+"+(nameSizeLimit+7)*"-"+"+")
+	if len(grid)>0:
+		for x in range(directorySelection-2,directorySelection+3):
+			try:
+				selectionName = grid[x]
+				#limit selection lenght
+				if len(str(selectionName))<nameSizeLimit:
+					toAdd = nameSizeLimit-len(str(grid[x]))
+					selectionName = selectionName+(toAdd*" ")
+				if len(str(selectionName))>nameSizeLimit:
+					selectionName = selectionName[0:nameSizeLimit-3]+"..."
+			except:
+				selectionName=""
+			if(x == directorySelection and x<len(grid) and x>=0):
+				#print(colored(" "+str(directorySelection)+" -> ["+str(grid[x])+"]\n",'red'))
+				if os.path.isdir(grid[directorySelection]):
+					cprint(marginX+"|"+"📁 "+str(directorySelection)+" ["+str(selectionName)+"]"+"|", textColor, highLights)
 				else:
-					if x<len(grid) and x>=0:
-						if os.path.isdir(grid[x]):
-							print(marginX+"|"+colored("📁 "+str(x)+" ("+str(selectionName)+")",textColor)+"|")
-						else:
-							print(marginX+"|"+colored("📄 "+str(x)+" ("+str(selectionName)+")",textColor)+"|")
-					else:
-						print(colored(marginX+"|"+"🚫 - ("+nameSizeLimit*" "+")"+"|",textColor))
-		else:
-			print(colored("[Empty directory]",textColor))
-		print(" +"+(nameSizeLimit+7)*"-"+"+")
-		cprint(colored(" Current directory: ["+str(path)+"]",textColor))
-		print(colored(" Current selection: ["+grid[x-2]+"]",textColor))
-
-	#activity-1-dsp
-	#view file content
-	elif activity==1:
-
-		#Open file
-		fs = open(grid[directorySelection], 'r')
-		#store lines into an array
-		linelist = fs.readlines()
-		fs.close()
-		#loop file cursor
-		#if fileSelection>len(linelist)-1:
-			#fileSelection=0
-		if fileSelection<0:
-			fileSelection=len(linelist)-1
-		print(colored("Current file: ["+str(grid[directorySelection])+"]",'red'))
-		print("--------------------")
-		#remove end line.
-		for i in range(len(linelist)):
-			linelist[i]=linelist[i].strip('\n')
-		#file delimitation begin and end
-		fd=""
-		for x in range(fileSelection-2,fileSelection+2):
-			#file delimitation warning
-			if x==0:
-				fd=colored("[BEGIN]:",'green')
-			elif x==len(linelist)-1:
-				fd=colored("[END]:",'green')
+					cprint(marginX+"|"+"📄 "+str(directorySelection)+" ["+str(selectionName)+"]"+"|", textColor, highLights)
 			else:
-				fd=""
-			#if is selected and is within file delimitation
-			if(x == fileSelection and x<len(linelist) and x>=0):
-				#if line is empty
-				if(str(linelist[x])==""):
-					print(fd+colored(" "+str(x)+" ()\n",'red'))
+				if x<len(grid) and x>=0:
+					if os.path.isdir(grid[x]):
+						print(marginX+"|"+colored("📁 "+str(x)+" ("+str(selectionName)+")",textColor)+"|")
+					else:
+						print(marginX+"|"+colored("📄 "+str(x)+" ("+str(selectionName)+")",textColor)+"|")
 				else:
-					print(fd+colored(" "+str(x)+" -> ["+str(linelist[x]).strip()+"]",'red'))
-			else:
-				if x<len(linelist) and x>=0 and str(linelist[x])!="":
-					print(fd+colored(" "+str(x)+" ("+str(linelist[x])+")",'white'))
-				elif x == fileSelection:
-					print(fd+colored(" "+str(x)+" ()",'red'))
-				elif x>=0:
-					print(fd+colored(" "+str(x)+" ()",'white'))
-				else:
-					print(colored(" - (-)",'white'))
-		print("--------------------")
-	#activity-2-dsp
-	#Edit line text
-	elif activity==2:
-		fs = open(grid[directorySelection], 'r')
-		#store lines into an array
-		linelist = fs.readlines()
-		#debug=fs.read()
-		fs.close()
-		print(colored("Edit line: ["+str(fileSelection)+"]",'red'))
-		print("")
-		print("--------------------")
-		print("Replace: "+str(linelist[fileSelection]).strip())
-		print("--------------------")
+					print(colored(marginX+"|"+"🚫 - ("+nameSizeLimit*" "+")"+"|",textColor))
+	else:
+		print(colored("[Empty directory]",textColor))
+	print(marginX+"+"+(nameSizeLimit+7)*"-"+"+")
+	cprint(marginX+colored("Current directory: ["+str(path)+"]",textColor))
+	print(marginX+colored("Current selection: ["+grid[x-2]+"]",textColor))
 	return fileSelection
 
 #----------------------------------------------------------------------------------#
@@ -313,9 +253,8 @@ start()
 display(directorySelection)
 
 #----------------------------------------------------------------------------------#
-	# ACTIVITY 0 #
+	# Directory #
 #----------------------------------------------------------------------------------#
-#a0
 #moving around directory
 def searchingrolling(keypress):
 
@@ -360,9 +299,9 @@ def searchingrolling(keypress):
 				start()
 			except:
 				oldPath=str(grid[directorySelection])
-				#try change activity to edit file
 				if os.path.isfile(oldPath):
-					activity=1
+					#edit file
+					os.system("nano "+str(oldPath))
 				else:
 					debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(grid[directorySelection])+"]."
 		else:
@@ -452,136 +391,6 @@ def searchingrolling(keypress):
 	return directorySelection
 
 #----------------------------------------------------------------------------------#
-	# ACTIVITY 1 #
-#----------------------------------------------------------------------------------#
-#a1
-#viewing file content
-def viewing(keypress):
-	#--------- activity-1 global variables ---------#
-	global fileSelection
-	global activity
-	global directorySelection
-	global debug
-
-	#get file lines
-	fs = open(grid[directorySelection], 'r')
-	#store lines into an array
-	linelist = fs.readlines()
-	fs.close()
-
-	#press down
-	if keypress == 's' or keypress == 'KEY_DOWN' or keypress == 'j':
-		#Move the selection down
-		fileSelection+=1
-	#press up
-	if keypress == 'w' or keypress == 'KEY_UP' or keypress == 'k':
-		#Move the selection up
-		fileSelection-=1
-	#press left
-	if(keypress == 'a'  or keypress == 'KEY_LEFT' or keypress == 'h'):
-		activity=0
-
-	if keypress == 'd' or keypress == 'KEY_RIGHT':
-		activity=2
-
-	#copy line to clipboard
-	if keypress == "c":
-		pyperclip.copy(linelist.strip('\n'))
-		print("index ["+str(fileSelection)+"] copyed to clipboard")
-		debug = "index ["+str(fileSelection)+"] copyed to clipboard"
-		#spam = pyperclip.paste()
-
-	#copy file to clipboard
-	if keypress == "u":
-		completelist=""
-		for x in linelist:
-			completelist += str(x)
-		#pyperclip.copy(linelist[fileSelection].strip('\n'))
-		pyperclip.copy(str(completelist))
-		debug = "file copyed to clipboard"
-		#spam = pyperclip.paste()
-
-	#search file index
-	if keypress == 'i':
-		searching=True
-		repeat = True
-		while repeat == True:
-			try:
-				search = int(input("Index: "))
-				if search < len(linelist):
-					fileSelection=search
-					repeat=False
-					debug="Selection moved to index: ["+str(search)+"]"
-				else:
-					debug = "I'm sorry "+userName+", I'm afraid I can't acces index ["+str(search)+"]"
-					#Refresh the terminal display
-					os.system('clear')
-					print(debug)
-			except:
-				debug = "Index must be integer."
-				#Refresh the terminal display
-				os.system('clear')
-				print(debug)
-
-	#--------- activity-1-search  ---------#
-	if keypress == 'f':
-		searching=True
-		search = input("Search: ")
-		#Loop trough the grid list to find a file with the same name as the search input.
-		#currently will find the word even if it is in the middle of another one wich is not ideal. (need to be fix)
-		for x in range(len(linelist)):
-			if str(search).lower() in str(linelist[x]).lower():
-				fileSelection=x
-				searching=False
-				debug="Selection moved to: ["+str(linelist[x]+"]")
-				break
-		#Loop trough the grid list to find a file that start with the same character as the search input.
-		if searching:
-			for x in range(len(linelist)):
-				if  len(search)>0 and str(linelist[x])[:1].lower() == search[:1].lower():
-					fileSelection=x
-					searching=False
-					debug="Selection moved to: ["+str(linelist[x]+"]")
-					exit()
-					break
-			debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
-			searching=False
-	return fileSelection
-
-#----------------------------------------------------------------------------------#
-	# ACTIVITY 2 #
-#----------------------------------------------------------------------------------#
-#a2
-#editing file line
-def editing(keypress):
-	global activity
-	#print("Please press [Enter] to confirm.")
-	lineText=str(input("With: "))
-	file = open(grid[directorySelection], "r")
-	f = file.readlines()
-	fs = len(f)
-
-	newText=""
-	for x in range(fs):
-		if x == fileSelection:
-			newText+=str(lineText)+"\n"
-		else:
-			newText+=str(f[x])
-	file.close()
-	#newText="BAAM"
-	debug=newText
-	print(newText)
-	file = open(grid[directorySelection], 'w')
-	file.write("")
-	file.close()
-	file = open(grid[directorySelection], 'a')
-	file.write(newText)
-	file.close()
-	activity=1
-	os.system('clear')
-	display(directorySelection)
-
-#----------------------------------------------------------------------------------#
 	# LOOP #
 #----------------------------------------------------------------------------------#
 #lp
@@ -596,10 +405,7 @@ while True:
 
 	#If the user is not using search
 	if searching==False:
-		if activity==0:
-			searchingrolling(keypress)
-		elif activity==1:
-			viewing(keypress)
+		searchingrolling(keypress)
 
 	#--------- Permanently available keypress options ---------#
 	#press esearchingape
