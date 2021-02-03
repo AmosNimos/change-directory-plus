@@ -1,5 +1,5 @@
 # change-directory-plus
-A minimalistic efficiemt python alternative to change the terminal working directory.
+A minimalistic efficiemt python alternative to change the terminal working directory on Debian based distro.
 
 ## Meta
 	CDP is a user friendly way to navigate directorys inside the terminal 
@@ -23,10 +23,6 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 	Rename files and directorys = y
 	copy path to selection = u
 	
-	#in file viewing mode only
-	copy line of text in file = c
-	copy complete file = u
-	
 ## Alternative keys
 	Move selection up = up arrow
 	Move selection up = k
@@ -44,16 +40,9 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 
 	To show hidden content use:
 	Use python3 /home/"file direcory"/cdp.py -sh
-
-## Installation
-	(not yet available)
-
-## Features currently in development (Not yet implemented to the repository):
-	 Create new file
-	 Lunch application
-
-## Release History
-	pre-Alpha
+	
+## Package requirements:
+	"sudo apt install nano"
 	
 | Help to support this project with a Liberapay donation |
 
