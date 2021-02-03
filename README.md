@@ -11,7 +11,7 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 ## How to use
 	Move selection up = w
 	Move selection down = s
-	Move into selected directory = a
+	Move into selected directory/file = a
 	Move out of current directory = d
 	Enter directory = e
 	Quit terminal = escape
@@ -22,6 +22,8 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 	show/hide hidden directory = v
 	Rename files and directorys = y
 	copy path to selection = u
+	create file = p
+	create directory = g
 	
 ## Alternative keys
 	Move selection up = up arrow
