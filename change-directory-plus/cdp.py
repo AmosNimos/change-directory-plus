@@ -39,6 +39,10 @@ except:
 	# VARIABLES #
 #----------------------------------------------------------------------------------#
 #var
+
+#You can also change it for vim or whatever terminal text editor of your choice.
+textEditor = "nano"
+
 #Get username for debug and acces home/user directory
 userName = str(getpass.getuser())
 
@@ -287,7 +291,6 @@ def searchingrolling(keypress):
 	if keypress == "v":
 		hide=not hide
 		goHome()
-
 	#Go up and down a directory
 	#RIGHT
 	if keypress == 'd' or keypress == 'KEY_RIGHT' or keypress == 'l':
@@ -301,7 +304,7 @@ def searchingrolling(keypress):
 				oldPath=str(grid[directorySelection])
 				if os.path.isfile(oldPath):
 					#edit file
-					os.system("nano "+str(oldPath))
+					os.system(textEditor+" "+str(oldPath))
 				else:
 					debug = "I'm sorry "+userName+", I'm afraid I can't access ["+str(grid[directorySelection])+"]."
 		else:
@@ -332,7 +335,7 @@ def searchingrolling(keypress):
 		try:
 			print("How do you whant to name this new file: ")
 			directoryName = str(input())
-			os.system("nano "+directoryName)
+			os.system(textEditor+" "+directoryName)
 			start()
 		except:
 			debug = "I'm sorry "+str(userName)+", the file "+directoryName+" could not be created"
