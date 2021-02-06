@@ -152,9 +152,7 @@ for i in range(len(sys.argv)):
 def start():
 	global path
 	#path = os.path.dirname(os.path.realpath(__file__))
-	if(path == ""):
-		path = os.getcwd()
-		initialisePath = True
+	path = os.getcwd()
 	files = os.listdir(path)
 	global grid
 	grid = []
@@ -254,10 +252,11 @@ def display(directorySelection):
 				else:
 					print(colored(marginX+"|"+"🚫 - ("+nameSizeLimit*" "+")"+"|",textColor))
 	else:
-		print(colored("[Empty directory]",textColor))
+		print(marginX+colored("[Empty directory]",textColor))
 	print(marginX+"+"+(nameSizeLimit+7)*"-"+"+")
 	cprint(marginX+colored("Current directory: ["+str(path)+"]",textColor))
-	print(marginX+colored("Current selection: ["+grid[x-2]+"]",textColor))
+	if(len(grid)>0):
+		print(marginX+colored("Current selection: ["+grid[x-2]+"]",textColor))
 	return fileSelection
 
 #----------------------------------------------------------------------------------#
