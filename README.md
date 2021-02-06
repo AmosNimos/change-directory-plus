@@ -13,6 +13,7 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 	Move selection down = s
 	Move into selected directory/file = a
 	Move out of current directory = d
+	(like in vim you can use hjkl keys to move)
 	Enter directory = e
 	Quit terminal = escape
 	exit cdp = q
@@ -30,7 +31,6 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 	Move selection down = down-arrow or j
 	Move into selected directory = right-arrow or l
 	Move out of current directory = left-arrow or h
-	Enter directory = enter
 
 ## Tips
 	Add the following to your bashrc file to use more efficiently:
@@ -47,8 +47,6 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 [![](https://liberapay.com/assets/widgets/donate.svg)](
 https://liberapay.com/Amos_Nimos/donate)
 
-| Help to support this project with a Paypal donation |
+[comment]: <> (| Help to support this project with a Paypal donation |)
 
-[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/amosnimos?locale.x=en_US)
-	
-AKUMA open source project by Amos Nimos
+[comment]: <> ([![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/amosnimos?locale.x=en_US))
