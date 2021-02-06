@@ -17,14 +17,17 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 	Enter directory = e
 	Quit terminal = escape
 	exit cdp = q
-	Search file name = f
-	Search index integer = r
+	Search file by full name or by the first character = f
+	remove file = r
 	return to the home/user directory = c
 	show/hide hidden directory = v
 	Rename files and directorys = y
 	copy path to selection = u
 	create file = p
 	create directory = g
+	open images, videos, or any file type with the default gui = o
+	change directory index = i 
+	(All the keys will be mappable trough a file soon.)
 	
 ## Alternative keys
 	Move selection up = up-arrow or k
@@ -38,9 +41,6 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 
 	To show hidden content use:
 	Use python3 /home/"file direcory"/cdp.py -sh
-	
-## Package requirements:
-	"sudo apt install nano"
 	
 | Help to support this project with a Liberapay donation |
 
