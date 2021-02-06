@@ -1,9 +1,5 @@
 # change-directory-plus
 
-## Meta
-	Cdp is a small minimalist open-source file manager, that try to be efficient and user friendly, the initial concept aimed to be an alternative to the "cd" command, but it evolved into somthing closer to a file manager.
-
-
 ## Screenshot
 ![](cdp_screenshot/cdp_001.png)
 
