@@ -47,6 +47,4 @@ A minimalistic efficiemt python alternative to change the terminal working direc
 [![](https://liberapay.com/assets/widgets/donate.svg)](
 https://liberapay.com/Amos_Nimos/donate)
 
-[comment]: <> (| Help to support this project with a Paypal donation |)
 
-[comment]: <> ([![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/amosnimos?locale.x=en_US))
