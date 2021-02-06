@@ -41,7 +41,7 @@ except:
 #var
 
 #You can also change it for vim or whatever terminal text editor of your choice.
-textEditor = "nano"
+textEditor = "$EDITOR"
 
 #Get username for debug and acces home/user directory
 userName = str(getpass.getuser())
