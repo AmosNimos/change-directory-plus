@@ -1,7 +1,7 @@
 # change-directory-plus
 
 ## Meta
-	CDP is a user friendly way to navigate directorys inside the terminal 
+	Cdp is a small minimalist open-source file manager, that try to be efficient and user friendly, the initial concept aimed to be an alternative to the "cd" command, but it evolved into somthing closer to a file manager.
 
 
 ## Screenshot
