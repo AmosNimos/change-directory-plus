@@ -333,7 +333,7 @@ def searchingrolling(keypress):
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
 		try:
-			print("How do you whant to name this new file: ")
+			print("How do you want to name this new file: ")
 			directoryName = str(input())
 			os.system(textEditor+" "+directoryName)
 			start()
@@ -495,7 +495,7 @@ while True:
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
 		try:
-			print("How do you whant to name this new directory: ")
+			print("How do you want to name this new directory: ")
 			directoryName = str(input())
 			os.mkdir(directoryName)
 			debug = oldPath+" was successfully created"
@@ -512,7 +512,7 @@ while True:
 		oldPath=str(grid[directorySelection])
 		try:
 			if os.path.isdir(path):
-				print("are you sure you whant to delete "+oldPath+" (y/n)?: ")
+				print("are you sure you want to delete "+oldPath+" (y/n)?: ")
 				userInput = input().lower()[0]
 				if userInput == "y":
 					os.rmdir(oldPath)
@@ -521,7 +521,7 @@ while True:
 				else:
 					debug = oldPath+" deletion as been aborted"
 			else:
-				print("are you sure you whant to delete "+oldPath+" (y/n)?: ")
+				print("are you sure you want to delete "+oldPath+" (y/n)?: ")
 				userInput = input().lower()[0]
 				if userInput == "y":
 					os.remove(oldPath)
