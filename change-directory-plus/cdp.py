@@ -82,6 +82,9 @@ sudoMode=""
 
 nameSizeLimit= 16
 
+path = ""
+#initialisePath == False
+
 #Text colors options:
 #grey
 #red
@@ -116,6 +119,9 @@ marginX = "  "
 #----------------------------------------------------------------------------------#
 #arg
 for i in range(len(sys.argv)):
+	if str(sys.argv[i])[:1] == "~/":
+		initialisePath = True
+		path = str(sys.argv[i]);
 	if str(sys.argv[i]) == "-h":
 		print("Sorry the info page for cdp is currently not available, use the readme file instead.")
 		debug="Sorry the info page for cdp is currently not available, use the readme file instead."
@@ -123,8 +129,20 @@ for i in range(len(sys.argv)):
 		hide=False
 	if str(sys.argv[i]) == "-sc":
 		showContent=True
+	if str(sys.argv[i]) == "-edt":
+		if sys.argv[i+1] != "":
+			##custum text editor command
+			textEditor = str(sys.argv[i+1])
+		else:
+			##default text editor command
+			textEditor = nano
 	if str(sys.argv[i]) == "-sudo":
-		sudoMode="sudo"
+		if sys.argv[i+1] != "":
+			##custum administrattor command
+			sudoMode=str(sys.argv[i+1])
+		else :
+			##default administrattor command
+			sudoMode="sudo"
 
 #----------------------------------------------------------------------------------#
 	# PATH #
@@ -134,7 +152,9 @@ for i in range(len(sys.argv)):
 def start():
 	global path
 	#path = os.path.dirname(os.path.realpath(__file__))
-	path = os.getcwd()
+	if(path == ""):
+		path = os.getcwd()
+		initialisePath = True
 	files = os.listdir(path)
 	global grid
 	grid = []
