@@ -1,5 +1,4 @@
 # change-directory-plus
-A minimalistic efficiemt python alternative to change the terminal working directory on Debian based distro.
 
 ## Meta
 	CDP is a user friendly way to navigate directorys inside the terminal 
