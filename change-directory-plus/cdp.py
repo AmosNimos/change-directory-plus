@@ -81,6 +81,8 @@ activity=0
 sudoMode=""
 
 nameSizeLimit= 16
+
+path = ""
 #initialisePath == False
 
 #Text colors options:
@@ -112,18 +114,14 @@ if highLights != "":
 
 marginX = "  "
 
-initialpath = ""
 #----------------------------------------------------------------------------------#
 	# ARGUMENTS #
 #----------------------------------------------------------------------------------#
 #arg
-if(len(sys.argv)>0):
-	for i in range(len(sys.argv)):
-		debug = str(sys.argv[0])[:1]
-		if str(sys.argv[0])[:1] == "/":
-			initialpath = str(sys.argv[i]);
-
-	"""
+for i in range(len(sys.argv)):
+	if str(sys.argv[i])[:1] == "~/":
+		initialisePath = True
+		path = str(sys.argv[i]);
 	if str(sys.argv[i]) == "-h":
 		print("Sorry the info page for cdp is currently not available, use the readme file instead.")
 		debug="Sorry the info page for cdp is currently not available, use the readme file instead."
@@ -145,9 +143,6 @@ if(len(sys.argv)>0):
 		else :
 			##default administrattor command
 			sudoMode="sudo"
-	"""
-
-
 
 #----------------------------------------------------------------------------------#
 	# PATH #
@@ -155,11 +150,10 @@ if(len(sys.argv)>0):
 #pth
 #set the path to current working directory
 def start():
+	global path
 	#path = os.path.dirname(os.path.realpath(__file__))
-	global initialpath
-	if(initialpath==""):
-		initialpath = os.getcwd()
-	files = os.listdir(initialpath)
+	path = os.getcwd()
+	files = os.listdir(path)
 	global grid
 	grid = []
 	for x in files:
@@ -169,7 +163,6 @@ def start():
 		else:
 			grid.append(x)
 	grid.sort(key=str.casefold)
-	return initialpath
 
 #set the path to current working directory parent directory
 def goup():
@@ -271,7 +264,6 @@ def display(directorySelection):
 #----------------------------------------------------------------------------------#
 #mn
 def main():
-	global path
 	with Input(keynames='curses') as input_generator:
 		for e in input_generator:
 			return e
@@ -280,7 +272,7 @@ def main():
 os.system('clear')
 
 #initialise programme
-path = start()
+start()
 display(directorySelection)
 
 #----------------------------------------------------------------------------------#
@@ -295,7 +287,6 @@ def searchingrolling(keypress):
 	global hide
 	global debug
 	global activity
-	global path
 
 	#press down
 	if keypress == 's' or keypress == 'KEY_DOWN' or keypress == 'j':
@@ -327,7 +318,7 @@ def searchingrolling(keypress):
 			try:
 				directoryLog.append(int(directorySelection))
 				os.chdir(str(path)+"/"+str(grid[directorySelection]))
-				path = start()
+				start()
 			except:
 				oldPath=str(grid[directorySelection])
 				if os.path.isfile(oldPath):
@@ -364,7 +355,7 @@ def searchingrolling(keypress):
 			print("How do you want to name this new file: ")
 			directoryName = str(input())
 			os.system(textEditor+" "+directoryName)
-			path = start()
+			start()
 		except:
 			debug = "I'm sorry "+str(userName)+", the file "+directoryName+" could not be created"
 			print(debug)
@@ -400,7 +391,7 @@ def searchingrolling(keypress):
 		os.rename(str(grid[directorySelection]),str(renaming))
 		searching=False
 		os.system('clear')
-		path = start()
+		start()
 
 	#--------- search directory name ---------#
 	if keypress == 'f':
@@ -508,7 +499,7 @@ while True:
 		oldPath=str(grid[directorySelection])
 		try:
 			os.system(sudoMode+" xdg-open " + newPath)
-			path = start()
+			start()
 		except:
 			debug = "I'm sorry "+str(userName)+", I can't open ["+oldPath+"]."
 			print(str(Exception))
@@ -527,7 +518,7 @@ while True:
 			directoryName = str(input())
 			os.mkdir(directoryName)
 			debug = oldPath+" was successfully created"
-			path = start()
+			start()
 		except:
 			debug = "I'm sorry "+str(userName)+", the directory "+directoryName+" could not be created"
 			print(debug)
@@ -544,7 +535,7 @@ while True:
 				userInput = input().lower()[0]
 				if userInput == "y":
 					os.rmdir(oldPath)
-					path = start()
+					start()
 					debug = oldPath+" was successfully deleted"
 				else:
 					debug = oldPath+" deletion as been aborted"
@@ -553,7 +544,7 @@ while True:
 				userInput = input().lower()[0]
 				if userInput == "y":
 					os.remove(oldPath)
-					path = start()
+					start()
 					debug = oldPath+" was successfully deleted"
 				else:
 					debug = oldPath+" deletion as been aborted"
