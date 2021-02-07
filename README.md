@@ -23,12 +23,6 @@
 	open images, videos, or any file type with the default gui = o
 	change directory index = i 
 	(All the keys will be mappable trough a file soon.)
-	
-## Alternative keys
-	Move selection up = up-arrow or k
-	Move selection down = down-arrow or j
-	Move into selected directory = right-arrow or l
-	Move out of current directory = left-arrow or h
 
 ## Tips
 	Add the following to your bashrc file to use more efficiently:
