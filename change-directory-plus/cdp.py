@@ -121,7 +121,7 @@ if(len(sys.argv)>0):
 	for i in range(len(sys.argv)):
 		debug = str(sys.argv[0])[:1]
 		if str(sys.argv[0])[:1] == "/":
-			path = str(sys.argv[i]);
+			initialpath = str(sys.argv[i]);
 
 	"""
 	if str(sys.argv[i]) == "-h":
@@ -159,7 +159,6 @@ def start():
 	global initialpath
 	if(initialpath==""):
 		initialpath = os.getcwd()
-	print(initialpath)
 	files = os.listdir(initialpath)
 	global grid
 	grid = []
@@ -281,10 +280,7 @@ def main():
 os.system('clear')
 
 #initialise programme
-if path == "":
-	path = start()
-else:
-	path = start()
+path = start()
 display(directorySelection)
 
 #----------------------------------------------------------------------------------#
