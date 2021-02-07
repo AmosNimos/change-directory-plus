@@ -81,8 +81,6 @@ activity=0
 sudoMode=""
 
 nameSizeLimit= 16
-
-path = ""
 #initialisePath == False
 
 #Text colors options:
@@ -114,15 +112,18 @@ if highLights != "":
 
 marginX = "  "
 
+initialpath = ""
 #----------------------------------------------------------------------------------#
 	# ARGUMENTS #
 #----------------------------------------------------------------------------------#
 #arg
-for i in range(len(sys.argv)):
-	debug = str(sys.argv[i])[:1]
-	if str(sys.argv[i])[:1] == "/":
-		path = str(sys.argv[i]);
-		print("test")
+if(len(sys.argv)>0):
+	for i in range(len(sys.argv)):
+		debug = str(sys.argv[0])[:1]
+		if str(sys.argv[0])[:1] == "/":
+			path = str(sys.argv[i]);
+
+	"""
 	if str(sys.argv[i]) == "-h":
 		print("Sorry the info page for cdp is currently not available, use the readme file instead.")
 		debug="Sorry the info page for cdp is currently not available, use the readme file instead."
@@ -144,15 +145,22 @@ for i in range(len(sys.argv)):
 		else :
 			##default administrattor command
 			sudoMode="sudo"
+	"""
+
+
 
 #----------------------------------------------------------------------------------#
 	# PATH #
 #----------------------------------------------------------------------------------#
 #pth
 #set the path to current working directory
-def start(path):
+def start():
 	#path = os.path.dirname(os.path.realpath(__file__))
-	files = os.listdir(path)
+	global initialpath
+	if(initialpath==""):
+		initialpath = os.getcwd()
+	print(initialpath)
+	files = os.listdir(initialpath)
 	global grid
 	grid = []
 	for x in files:
@@ -162,7 +170,7 @@ def start(path):
 		else:
 			grid.append(x)
 	grid.sort(key=str.casefold)
-	return path
+	return initialpath
 
 #set the path to current working directory parent directory
 def goup():
@@ -264,6 +272,7 @@ def display(directorySelection):
 #----------------------------------------------------------------------------------#
 #mn
 def main():
+	global path
 	with Input(keynames='curses') as input_generator:
 		for e in input_generator:
 			return e
@@ -273,10 +282,9 @@ os.system('clear')
 
 #initialise programme
 if path == "":
-	path = start(os.getcwd())
-	print(debug)
+	path = start()
 else:
-	path = start(path)
+	path = start()
 display(directorySelection)
 
 #----------------------------------------------------------------------------------#
@@ -323,7 +331,7 @@ def searchingrolling(keypress):
 			try:
 				directoryLog.append(int(directorySelection))
 				os.chdir(str(path)+"/"+str(grid[directorySelection]))
-				path = start(os.getcwd())
+				path = start()
 			except:
 				oldPath=str(grid[directorySelection])
 				if os.path.isfile(oldPath):
@@ -360,7 +368,7 @@ def searchingrolling(keypress):
 			print("How do you want to name this new file: ")
 			directoryName = str(input())
 			os.system(textEditor+" "+directoryName)
-			path = start(os.getcwd())
+			path = start()
 		except:
 			debug = "I'm sorry "+str(userName)+", the file "+directoryName+" could not be created"
 			print(debug)
@@ -396,7 +404,7 @@ def searchingrolling(keypress):
 		os.rename(str(grid[directorySelection]),str(renaming))
 		searching=False
 		os.system('clear')
-		path = start(os.getcwd())
+		path = start()
 
 	#--------- search directory name ---------#
 	if keypress == 'f':
@@ -410,7 +418,7 @@ def searchingrolling(keypress):
 				os.system('clear')
 				debug="Selection moved to: ["+str(grid[x])+"]"
 				break
-		#Loop trough the grid list to find a file that start os.getcwd()with the same character as the search input.
+		#Loop trough the grid list to find a file that start with the same character as the search input.
 		if searching:
 			for x in range(len(grid)):
 				#ignore the dot in hidden file titles for single character search
@@ -504,7 +512,7 @@ while True:
 		oldPath=str(grid[directorySelection])
 		try:
 			os.system(sudoMode+" xdg-open " + newPath)
-			path = start(os.getcwd())
+			path = start()
 		except:
 			debug = "I'm sorry "+str(userName)+", I can't open ["+oldPath+"]."
 			print(str(Exception))
@@ -523,7 +531,7 @@ while True:
 			directoryName = str(input())
 			os.mkdir(directoryName)
 			debug = oldPath+" was successfully created"
-			path = start(os.getcwd())
+			path = start()
 		except:
 			debug = "I'm sorry "+str(userName)+", the directory "+directoryName+" could not be created"
 			print(debug)
@@ -540,7 +548,7 @@ while True:
 				userInput = input().lower()[0]
 				if userInput == "y":
 					os.rmdir(oldPath)
-					path = start(os.getcwd())
+					path = start()
 					debug = oldPath+" was successfully deleted"
 				else:
 					debug = oldPath+" deletion as been aborted"
@@ -549,7 +557,7 @@ while True:
 				userInput = input().lower()[0]
 				if userInput == "y":
 					os.remove(oldPath)
-					path = start(os.getcwd())
+					path = start()
 					debug = oldPath+" was successfully deleted"
 				else:
 					debug = oldPath+" deletion as been aborted"
