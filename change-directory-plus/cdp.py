@@ -119,9 +119,10 @@ marginX = "  "
 #----------------------------------------------------------------------------------#
 #arg
 for i in range(len(sys.argv)):
-	if str(sys.argv[i])[:1] == "~/":
-		initialisePath = True
+	debug = str(sys.argv[i])[:1]
+	if str(sys.argv[i])[:1] == "/":
 		path = str(sys.argv[i]);
+		print("test")
 	if str(sys.argv[i]) == "-h":
 		print("Sorry the info page for cdp is currently not available, use the readme file instead.")
 		debug="Sorry the info page for cdp is currently not available, use the readme file instead."
@@ -149,10 +150,8 @@ for i in range(len(sys.argv)):
 #----------------------------------------------------------------------------------#
 #pth
 #set the path to current working directory
-def start():
-	global path
+def start(path):
 	#path = os.path.dirname(os.path.realpath(__file__))
-	path = os.getcwd()
 	files = os.listdir(path)
 	global grid
 	grid = []
@@ -163,6 +162,7 @@ def start():
 		else:
 			grid.append(x)
 	grid.sort(key=str.casefold)
+	return path
 
 #set the path to current working directory parent directory
 def goup():
@@ -272,7 +272,11 @@ def main():
 os.system('clear')
 
 #initialise programme
-start()
+if path == "":
+	path = start(os.getcwd())
+	print(debug)
+else:
+	path = start(path)
 display(directorySelection)
 
 #----------------------------------------------------------------------------------#
@@ -287,6 +291,7 @@ def searchingrolling(keypress):
 	global hide
 	global debug
 	global activity
+	global path
 
 	#press down
 	if keypress == 's' or keypress == 'KEY_DOWN' or keypress == 'j':
@@ -318,7 +323,7 @@ def searchingrolling(keypress):
 			try:
 				directoryLog.append(int(directorySelection))
 				os.chdir(str(path)+"/"+str(grid[directorySelection]))
-				start()
+				path = start(os.getcwd())
 			except:
 				oldPath=str(grid[directorySelection])
 				if os.path.isfile(oldPath):
@@ -355,7 +360,7 @@ def searchingrolling(keypress):
 			print("How do you want to name this new file: ")
 			directoryName = str(input())
 			os.system(textEditor+" "+directoryName)
-			start()
+			path = start(os.getcwd())
 		except:
 			debug = "I'm sorry "+str(userName)+", the file "+directoryName+" could not be created"
 			print(debug)
@@ -391,7 +396,7 @@ def searchingrolling(keypress):
 		os.rename(str(grid[directorySelection]),str(renaming))
 		searching=False
 		os.system('clear')
-		start()
+		path = start(os.getcwd())
 
 	#--------- search directory name ---------#
 	if keypress == 'f':
@@ -405,7 +410,7 @@ def searchingrolling(keypress):
 				os.system('clear')
 				debug="Selection moved to: ["+str(grid[x])+"]"
 				break
-		#Loop trough the grid list to find a file that start with the same character as the search input.
+		#Loop trough the grid list to find a file that start os.getcwd()with the same character as the search input.
 		if searching:
 			for x in range(len(grid)):
 				#ignore the dot in hidden file titles for single character search
@@ -499,7 +504,7 @@ while True:
 		oldPath=str(grid[directorySelection])
 		try:
 			os.system(sudoMode+" xdg-open " + newPath)
-			start()
+			path = start(os.getcwd())
 		except:
 			debug = "I'm sorry "+str(userName)+", I can't open ["+oldPath+"]."
 			print(str(Exception))
@@ -518,7 +523,7 @@ while True:
 			directoryName = str(input())
 			os.mkdir(directoryName)
 			debug = oldPath+" was successfully created"
-			start()
+			path = start(os.getcwd())
 		except:
 			debug = "I'm sorry "+str(userName)+", the directory "+directoryName+" could not be created"
 			print(debug)
@@ -535,7 +540,7 @@ while True:
 				userInput = input().lower()[0]
 				if userInput == "y":
 					os.rmdir(oldPath)
-					start()
+					path = start(os.getcwd())
 					debug = oldPath+" was successfully deleted"
 				else:
 					debug = oldPath+" deletion as been aborted"
@@ -544,7 +549,7 @@ while True:
 				userInput = input().lower()[0]
 				if userInput == "y":
 					os.remove(oldPath)
-					start()
+					path = start(os.getcwd())
 					debug = oldPath+" was successfully deleted"
 				else:
 					debug = oldPath+" deletion as been aborted"
