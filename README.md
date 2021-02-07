@@ -37,6 +37,9 @@
 	To show hidden content use:
 	Use python3 /home/"file direcory"/cdp.py -sh
 	
+## Arguments
+	cdp /file-path
+	
 | Help to support this project with a Liberapay donation |
 
 [![](https://liberapay.com/assets/widgets/donate.svg)](
