@@ -1,3 +1,8 @@
+random
+os
+sys
+signal
+getpass
 numpy==1.19.4
 pyperclip==1.8.1
 termcolor==1.1.0
