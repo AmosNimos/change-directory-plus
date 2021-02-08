@@ -23,16 +23,20 @@ except:
 	print("Manual installation:")
 	print("pip3 install requirements.txt")
 	print("--------------------")
-	"""
+	#I don't care that this is bad practice, it just work.
+	#
 	print("Install the missing dependency automatically (N/y):")
 	userInput = input().lower()[0]
 	if userInput == "y":
 		try:
 			print("Attempting to acquire missing dependency, please wait.")
-			os.system("pip3 install requirement.txt")
+			os.system("pip3 install getpass")
+			os.system("pip3 install numpy")
+			os.system("pip3 install pyperclip")
+			os.system("pip3 install termcolor")
+			os.system("pip3 install curtsies")
 		except:
 			print("The missing dependency could not be acquired.")
-	"""
 	exit()
 
 #----------------------------------------------------------------------------------#
@@ -40,11 +44,19 @@ except:
 #----------------------------------------------------------------------------------#
 #var
 
-#You can also change it for vim or whatever terminal text editor of your choice.
-textEditor = "$EDITOR"
+
 
 #Get username for debug and acces home/user directory
 userName = str(getpass.getuser())
+
+#You can also change it for vim or whatever terminal text editor of your choice.
+if "$EDITOR" != "":
+	textEditor = "$EDITOR"
+else:
+		debug = "I'm sorry "+str(userName)+" the default editor is missing."
+		debug += "\n"+"Try: sudo update-alternatives --config editor"
+		print(debug)
+
 
 #Softwair title
 sys.stdout.write("\x1b]2;Change Dicrectory Plus\x07")
@@ -81,10 +93,9 @@ activity=0
 sudoMode=""
 
 nameSizeLimit= 16
-
-path = ""
 #initialisePath == False
 
+#cdp-config
 #Text colors options:
 #grey
 #red
@@ -114,14 +125,18 @@ if highLights != "":
 
 marginX = "  "
 
+initialpath = ""
 #----------------------------------------------------------------------------------#
 	# ARGUMENTS #
 #----------------------------------------------------------------------------------#
 #arg
-for i in range(len(sys.argv)):
-	if str(sys.argv[i])[:1] == "~/":
-		initialisePath = True
-		path = str(sys.argv[i]);
+if(len(sys.argv)>0):
+	for i in range(len(sys.argv)):
+		debug = str(sys.argv[0])[:1]
+		if str(sys.argv[0])[:1] == "/":
+			initialpath = str(sys.argv[i]);
+
+	"""
 	if str(sys.argv[i]) == "-h":
 		print("Sorry the info page for cdp is currently not available, use the readme file instead.")
 		debug="Sorry the info page for cdp is currently not available, use the readme file instead."
@@ -143,12 +158,32 @@ for i in range(len(sys.argv)):
 		else :
 			##default administrattor command
 			sudoMode="sudo"
+	"""
+
+
 
 #----------------------------------------------------------------------------------#
 	# PATH #
 #----------------------------------------------------------------------------------#
 #pth
 #set the path to current working directory
+def initialStart(initialpath):
+	#path = os.path.dirname(os.path.realpath(__file__))
+	if(initialpath==str(__file__)):
+		initialpath = os.getcwd()
+	files = os.listdir(initialpath)
+	global grid
+	grid = []
+	for x in files:
+		if x[:1]==".":
+			if hide == False:
+				grid.append(x)
+		else:
+			grid.append(x)
+	grid.sort(key=str.casefold)
+	os.chdir(str(initialpath))
+	return initialpath
+
 def start():
 	global path
 	#path = os.path.dirname(os.path.realpath(__file__))
@@ -264,6 +299,7 @@ def display(directorySelection):
 #----------------------------------------------------------------------------------#
 #mn
 def main():
+	global path
 	with Input(keynames='curses') as input_generator:
 		for e in input_generator:
 			return e
@@ -272,7 +308,7 @@ def main():
 os.system('clear')
 
 #initialise programme
-start()
+path = initialStart(initialpath)
 display(directorySelection)
 
 #----------------------------------------------------------------------------------#
@@ -287,6 +323,7 @@ def searchingrolling(keypress):
 	global hide
 	global debug
 	global activity
+	global path
 
 	#press down
 	if keypress == 's' or keypress == 'KEY_DOWN' or keypress == 'j':
