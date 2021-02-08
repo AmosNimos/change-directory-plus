@@ -1,9 +1,4 @@
-random
-os
-sys
-signal
-getpass
-numpy
-pyperclip
-termcolor
-curtsies
+numpy==1.19.4
+pyperclip==1.8.1
+termcolor==1.1.0
+curtsies==0.3.4
