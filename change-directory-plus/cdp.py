@@ -21,7 +21,7 @@ except:
 	print("Missing dependency error!")
 	print("")
 	print("Manual installation:")
-	print("pip3 install requirement.txt")
+	print("pip3 install requirements.txt")
 	print("--------------------")
 	"""
 	print("Install the missing dependency automatically (N/y):")
