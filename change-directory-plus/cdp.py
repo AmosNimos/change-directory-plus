@@ -477,26 +477,34 @@ def searchingrolling(keypress):
 							debug="Selection moved to: ["+str(grid[x])+"]"
 							break
 			else:
-				print("You search content aprears in:")
-				for i in range(len(srchin)):
-					print(marginX+str(i)+"-"+str(grid[srchin[i]]))
-				decision = len(srchin)+1
-				print("")
-				try:
-					while decision > len(srchin):
-						decision = int(input("Move selection to: "))
-						if decision > len(srchin):
-							print(str(decision)+" was not a valid option.")
-							print("Human trying to cheat the system uh...")
-							print("I will select for you, incompetent human.")
-							decision = int(rn.randrange(0,len(srchin)))
+				print(str(len(srchin)))
+				if len(srchin) == 1:
+					decision = 0
 					directorySelection = srchin[decision]
 					searching=False
 					os.system('clear')
 					debug="Selection moved to: ["+str(grid[srchin[decision]])+"]"
-				except:
-					print("I'm sorry "+userName+", I'm afraid your search attempt faild.")
-					searching=False
+				else:
+					print("You search content aprears in:")
+					for i in range(len(srchin)):
+						print(marginX+str(i)+"-"+str(grid[srchin[i]]))
+					decision = len(srchin)+1
+					print("")
+					try:
+						while decision > len(srchin):
+							decision = int(input("Move selection to: "))
+							if decision > len(srchin):
+								print(str(decision)+" was not a valid option.")
+								print("Human trying to cheat the system uh...")
+								print("I will select for you, incompetent human.")
+								decision = int(rn.randrange(0,len(srchin)))
+						directorySelection = srchin[decision]
+						searching=False
+						os.system('clear')
+						debug="Selection moved to: ["+str(grid[srchin[decision]])+"]"
+					except:
+						print("I'm sorry "+userName+", I'm afraid your search attempt faild.")
+						searching=False
 		#In case the input is not in the directory.
 		if searching:
 			debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
