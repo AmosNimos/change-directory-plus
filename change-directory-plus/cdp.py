@@ -312,6 +312,21 @@ path = initialStart(initialpath)
 display(directorySelection)
 
 #----------------------------------------------------------------------------------#
+	# Search #
+#----------------------------------------------------------------------------------#
+
+def searchInName(searchWord, listIndex):
+	instences=[]
+	for x in range(len(listIndex)):
+		if searchWord in str(listIndex[x]):
+			instences.append(int(x))
+	if len(instences)>0:
+		return instences
+	else:
+		return False
+
+
+#----------------------------------------------------------------------------------#
 	# Directory #
 #----------------------------------------------------------------------------------#
 #moving around directory
@@ -444,21 +459,44 @@ def searchingrolling(keypress):
 				break
 		#Loop trough the grid list to find a file that start with the same character as the search input.
 		if searching:
-			for x in range(len(grid)):
-				#ignore the dot in hidden file titles for single character search
-				if(str(grid[x])[:1]!="."):
-					if len(search)>0 and str(grid[x])[0].lower() == search[0].lower():
-						directorySelection=x
-						searching=False
-						os.system('clear')
-						debug="Selection moved to: ["+str(grid[x])+"]"
-						break
-				else:
-					if len(search)>0 and str(grid[x])[1].lower() == search[0].lower():
-						directorySelection=x
-						searching=False
-						debug="Selection moved to: ["+str(grid[x])+"]"
-						break
+			srchin = searchInName(str(search),grid)
+			if srchin == False:
+				for x in range(len(grid)):
+					#ignore the dot in hidden file titles for single character search
+					if(str(grid[x])[:1]!="."):
+						if len(search)>0 and str(grid[x])[0].lower() == search[0].lower():
+							directorySelection=x
+							searching=False
+							os.system('clear')
+							debug="Selection moved to: ["+str(grid[x])+"]"
+							break
+					else:
+						if len(search)>0 and str(grid[x])[1].lower() == search[0].lower():
+							directorySelection=x
+							searching=False
+							debug="Selection moved to: ["+str(grid[x])+"]"
+							break
+			else:
+				print("You search content aprears in:")
+				for i in range(len(srchin)):
+					print(marginX+str(i)+"-"+str(grid[srchin[i]]))
+				decision = len(srchin)+1
+				print("")
+				try:
+					while decision > len(srchin):
+						decision = int(input("Move selection to: "))
+						if decision > len(srchin):
+							print(str(decision)+" was not a valid option.")
+							print("Human trying to cheat the system uh...")
+							print("I will select for you, incompetent human.")
+							decision = int(rn.randrange(0,len(srchin)))
+					directorySelection = srchin[decision]
+					searching=False
+					os.system('clear')
+					debug="Selection moved to: ["+str(grid[srchin[decision]])+"]"
+				except:
+					print("I'm sorry "+userName+", I'm afraid your search attempt faild.")
+					searching=False
 		#In case the input is not in the directory.
 		if searching:
 			debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
