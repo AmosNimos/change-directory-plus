@@ -26,10 +26,10 @@
 
 ## Tips
 	Add the following to your bashrc file to use more efficiently:
-	alias cdp = python3 /home/"file direcory"/cdp.py
+	alias cdp = python3 /home/"file-directory"/cdp.py
 	
 ## Arguments
-	cdp /file-path
+	cdp /"directory-path"
 	
 | Help to support this project with a Liberapay donation |
 
