@@ -43,7 +43,8 @@ except:
 #----------------------------------------------------------------------------------#
 	# CONFIGURATIONS #
 #----------------------------------------------------------------------------------#
-configFile = './cdp.config'
+cdpPath = os.path.dirname(os.path.abspath(__file__))
+configFile = str(cdpPath)+'/cdp.config'
 config = ConfigParser()
 config.read(configFile)
 textColor="red"
