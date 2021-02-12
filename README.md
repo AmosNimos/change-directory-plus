@@ -30,14 +30,14 @@
 	
 ## cdp-config options
 	colors options:
-	*grey
-	*red
-	*green
-	*yellow
-	*blue
-	*magenta
-	*cyan
-	*white
+	* grey
+	* red
+	* green
+	* yellow
+	* blue
+	* magenta
+	* cyan
+	* white
 	Config file not yet available
 	
 ## Arguments
