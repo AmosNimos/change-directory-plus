@@ -53,6 +53,13 @@ textEditor="$EDITOR"
 textColor = str(config["theme"]["textColor"])
 highLights = config["theme"]["highLights"]
 textEditor = config["default"]["textEditor"]
+keys= ['','','','','','']
+keys[0] = config["keys"]["openSelection"]
+keys[1] = config["keys"]["openGui"]
+keys[2] = config["keys"]["createDirectory"]
+keys[3] = config["keys"]["Delete"]
+keys[4] = config["keys"]["searchName"]
+keys[5] = config["keys"]["changeName"]
 
 #----------------------------------------------------------------------------------#
 	# VARIABLES #
@@ -349,6 +356,26 @@ def searchingrolling(keypress):
 		if path == '/':
 			debug = "I'm sorry "+userName+", I'm afraid I can't access [Missing directory]."
 
+	return directorySelection
+
+#----------------------------------------------------------------------------------#
+	# LOOP #
+#----------------------------------------------------------------------------------#
+#lp
+#Main programme loop
+while True:
+
+	#Get keypress from the main function
+	keypress = main()
+
+	#Refresh the terminal display
+	os.system('clear')
+
+	#If the user is not using search
+	if searching is False:
+		searchingrolling(keypress)
+
+#____ Permanently available keypress options ____#
 	#--------- copy selection path---------#
 	if keypress == 'u':
 		pyperclip.copy(str(path)+"/"+str(grid[directorySelection]))
@@ -391,8 +418,8 @@ def searchingrolling(keypress):
 				os.system('clear')
 				print(debug)
 
-	#--------- change directory name ---------#
-	if keypress == 'y':
+	#--------- change selection name ---------#
+	if keypress == keys[5]:
 		searching=True
 		print("Current folder name "+str(grid[directorySelection]))
 		renaming = input("Rename to: ")
@@ -401,8 +428,8 @@ def searchingrolling(keypress):
 		os.system('clear')
 		start()
 
-	#--------- search directory name ---------#
-	if keypress == 'f':
+	#--------- search name ---------#
+	if keypress == keys[4]:
 		searching=True
 		search = input("Search: ")
 		#Loop trough the grid list to find a file with the same name as the search input.
@@ -466,60 +493,12 @@ def searchingrolling(keypress):
 			debug = "I'm sorry "+userName+", I'm afraid I can't find ["+str(search)+"]."
 			searching=False
 
-
-	return directorySelection
-
-#----------------------------------------------------------------------------------#
-	# LOOP #
-#----------------------------------------------------------------------------------#
-#lp
-#Main programme loop
-while True:
-
-	#Get keypress from the main function
-	keypress = main()
-
-	#Refresh the terminal display
-	os.system('clear')
-
-	#If the user is not using search
-	if searching is False:
-		searchingrolling(keypress)
-
-	#--------- Permanently available keypress options ---------#
-	#press esearchingape
-	if keypress == '\x1b':
-		try:
-			os.kill(os.getppid(), signal.SIGHUP)
-			sys.exit()
-		except:
-			debug = "I'm sorry "+userName+", I'm afraid I can't do that"
-
 	#exit cdp
 	if keypress == 'q':
 		sys.exit()
 
-	#open dir in terminal and quiting cdp
-	if keypress == 'e' or  keypress == '\n':
-		#Enter the currently selected directory
-		newPath=str(path)+"/"+str(grid[directorySelection])
-		oldPath=str(grid[directorySelection])
-		if os.path.isdir(newPath):
-			os.system(sudoMode+"gnome-terminal --working-directory="+newPath)
-			os.kill(os.getppid(), signal.SIGHUP)
-			sys.exit()
-		elif os.path.isdir(path):
-			os.system(sudoMode+"gnome-terminal --working-directory="+str(path))
-			os.kill(os.getppid(), signal.SIGHUP)
-			sys.exit()
-		else:
-			debug = "I'm sorry "+str(userName)+", I can't open ["+str(grid[directorySelection])+"]."
-			print(debug)
-			sys.exit()
-
-	#open dir in terminal without quiting cdp
-	if keypress == ' ':
-		#Enter the currently selected directory
+	#Enter the currently selected directory
+	if keypress == keys[0]:
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
 		if os.path.isdir(newPath):
@@ -532,7 +511,7 @@ while True:
 			sys.exit()
 
 	#Open with gui file manager (xdg)
-	if keypress == 'o':
+	if keypress == keys[1]:
 		#Enter the currently selected directory
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
@@ -547,8 +526,8 @@ while True:
 
 #os.mkdir(path)
 
-	#create directory
-	if keypress == 'g':
+	#Create directory
+	if keypress == keys[2]:
 		#Enter the currently selected directory
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
@@ -563,8 +542,8 @@ while True:
 			print(debug)
 			sys.exit()
 
-	#Delete file
-	if keypress == 'r':
+	#Delete selection
+	if keypress == keys[3]:
 		#Enter the currently selected directory
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
