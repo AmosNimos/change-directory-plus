@@ -37,7 +37,7 @@ except:
 			os.system("pip3 install curtsies")
 		except:
 			print("The missing dependency could not be acquired.")
-	exit()
+	sys.exit()
 
 #----------------------------------------------------------------------------------#
 	# VARIABLES #
@@ -176,7 +176,7 @@ def initialStart(initialpath):
 	grid = []
 	for x in files:
 		if x[:1]==".":
-			if hide == False:
+			if hide is False:
 				grid.append(x)
 		else:
 			grid.append(x)
@@ -193,7 +193,7 @@ def start():
 	grid = []
 	for x in files:
 		if x[:1]==".":
-			if hide == False:
+			if hide is False:
 				grid.append(x)
 		else:
 			grid.append(x)
@@ -210,7 +210,7 @@ def goup():
 	grid = []
 	for x in files:
 		if x[:1]==".":
-			if hide == False:
+			if hide is False:
 				grid.append(x)
 		else:
 			grid.append(x)
@@ -231,7 +231,7 @@ def goHome():
 	grid = []
 	for x in files:
 		if x[:1]==".":
-			if hide == False:
+			if hide is False:
 				grid.append(x)
 		else:
 			grid.append(x)
@@ -256,7 +256,7 @@ def display(directorySelection):
 	print("")
 	print(marginX+"Change Directory Plus")
 	#cprint(colored(" Current directory: ["+str(path)+"]",textColor))
-	if(showContent==True):
+	if(showContent is True):
 		print(colored("| List of content: ["+str(os.listdir(path))+"]",'green'))
 	#print("")
 	print(marginX+"+"+(nameSizeLimit+7)*"-"+"+")
@@ -321,9 +321,8 @@ def searchInName(searchWord, listIndex):
 		if searchWord in str(listIndex[x]):
 			instences.append(int(x))
 	if len(instences)>0:
-		return instences
-	else:
-		return False
+	    return instences
+	return False
 
 
 #----------------------------------------------------------------------------------#
@@ -411,13 +410,13 @@ def searchingrolling(keypress):
 		except:
 			debug = "I'm sorry "+str(userName)+", the file "+directoryName+" could not be created"
 			print(debug)
-			exit()
+			sys.exit()
 
 	#--------- change directory index ---------#
 	if keypress == 'i':
 		searching=True
 		repeat = True
-		while repeat == True:
+		while repeat is True:
 			try:
 				search = int(input("Index: "))
 				if search < len(grid):
@@ -460,7 +459,7 @@ def searchingrolling(keypress):
 		#Loop trough the grid list to find a file that start with the same character as the search input.
 		if searching:
 			srchin = searchInName(str(search),grid)
-			if srchin == False:
+			if srchin is False:
 				for x in range(len(grid)):
 					#ignore the dot in hidden file titles for single character search
 					if(str(grid[x])[:1]!="."):
@@ -527,7 +526,7 @@ while True:
 	os.system('clear')
 
 	#If the user is not using search
-	if searching==False:
+	if searching is False:
 		searchingrolling(keypress)
 
 	#--------- Permanently available keypress options ---------#
@@ -535,13 +534,13 @@ while True:
 	if keypress == '\x1b':
 		try:
 			os.kill(os.getppid(), signal.SIGHUP)
-			exit()
+			sys.exit()
 		except:
 			debug = "I'm sorry "+userName+", I'm afraid I can't do that"
 
 	#exit cdp
 	if keypress == 'q':
-		exit()
+		sys.exit()
 
 	#open dir in terminal and quiting cdp
 	if keypress == 'e' or  keypress == '\n':
@@ -551,15 +550,15 @@ while True:
 		if os.path.isdir(newPath):
 			os.system(sudoMode+"gnome-terminal --working-directory="+newPath)
 			os.kill(os.getppid(), signal.SIGHUP)
-			exit()
+			sys.exit()
 		elif os.path.isdir(path):
 			os.system(sudoMode+"gnome-terminal --working-directory="+str(path))
 			os.kill(os.getppid(), signal.SIGHUP)
-			exit()
+			sys.exit()
 		else:
 			debug = "I'm sorry "+str(userName)+", I can't open ["+str(grid[directorySelection])+"]."
 			print(debug)
-			exit()
+			sys.exit()
 
 	#open dir in terminal without quiting cdp
 	if keypress == ' ':
@@ -573,7 +572,7 @@ while True:
 		else:
 			debug = "I'm sorry "+str(userName)+", I can't open ["+oldPath+"]."
 			print(debug)
-			exit()
+			sys.exit()
 
 	#Open with gui file manager (xdg)
 	if keypress == 'o':
@@ -587,7 +586,7 @@ while True:
 			debug = "I'm sorry "+str(userName)+", I can't open ["+oldPath+"]."
 			print(str(Exception))
 			print(debug)
-			exit()
+			sys.exit()
 
 #os.mkdir(path)
 
@@ -605,7 +604,7 @@ while True:
 		except:
 			debug = "I'm sorry "+str(userName)+", the directory "+directoryName+" could not be created"
 			print(debug)
-			exit()
+			sys.exit()
 
 	#Delete file
 	if keypress == 'r':
@@ -634,7 +633,7 @@ while True:
 		except:
 			debug = "I'm sorry "+str(userName)+", I can't delete ["+str(grid[directorySelection])+"]."
 			print(debug)
-			exit()
+			sys.exit()
 
 	#make the cursor loop around
 	if directorySelection>len(grid)-1:
