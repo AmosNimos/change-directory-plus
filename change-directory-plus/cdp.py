@@ -10,8 +10,8 @@ try:
 	import os
 	import sys
 	import signal
-	from configparser inport ConfigParser
 	#External library
+	from configparser import ConfigParser
 	import getpass
 	import numpy as np
 	import pyperclip
@@ -31,6 +31,7 @@ except:
 	if userInput == "y":
 		try:
 			print("Attempting to acquire missing dependency, please wait.")
+			os.system("pip3 install configparser")
 			os.system("pip3 install getpass")
 			os.system("pip3 install numpy")
 			os.system("pip3 install pyperclip")
@@ -42,12 +43,17 @@ except:
 #----------------------------------------------------------------------------------#
 	# CONFIGURATIONS #
 #----------------------------------------------------------------------------------#
-configFile = "cdp.config"
+configFile = './cdp.config'
 config = ConfigParser()
 config.read(configFile)
-textColor = config['theme']['textColor']
+textColor="red"
+highLights="white"
+textEditor="$EDITOR"
+print(config.sections())
+exit()
+textColor = str(config['theme']['textColor'])
 highLights = config['theme']['highLights']
-textEditor = config['default']['$EDITOR']
+textEditor = config['default']['textEditor']
 #----------------------------------------------------------------------------------#
 	# VARIABLES #
 #----------------------------------------------------------------------------------#
