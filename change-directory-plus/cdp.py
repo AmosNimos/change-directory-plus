@@ -10,6 +10,7 @@ try:
 	import os
 	import sys
 	import signal
+	from configparser inport ConfigParser
 	#External library
 	import getpass
 	import numpy as np
@@ -24,7 +25,7 @@ except:
 	print("pip3 install requirements.txt")
 	print("--------------------")
 	#I don't care that this is bad practice, it just work.
-	#
+	#If you have a working better idea, do a merge request i will gladly accept it.
 	print("Install the missing dependency automatically (N/y):")
 	userInput = input().lower()[0]
 	if userInput == "y":
@@ -38,7 +39,15 @@ except:
 		except:
 			print("The missing dependency could not be acquired.")
 	sys.exit()
-
+#----------------------------------------------------------------------------------#
+	# CONFIGURATIONS #
+#----------------------------------------------------------------------------------#
+configFile = "cdp.config"
+config = ConfigParser()
+config.read(configFile)
+textColor = config['theme']['textColor']
+highLights = config['theme']['highLights']
+textEditor = config['default']['$EDITOR']
 #----------------------------------------------------------------------------------#
 	# VARIABLES #
 #----------------------------------------------------------------------------------#
@@ -48,14 +57,6 @@ except:
 
 #Get username for debug and acces home/user directory
 userName = str(getpass.getuser())
-
-#You can also change it for vim or whatever terminal text editor of your choice.
-if "$EDITOR" != "":
-	textEditor = "$EDITOR"
-else:
-		debug = "I'm sorry "+str(userName)+" the default editor is missing."
-		debug += "\n"+"Try: sudo update-alternatives --config editor"
-		print(debug)
 
 
 #Softwair title
@@ -95,31 +96,7 @@ sudoMode=""
 nameSizeLimit= 16
 #initialisePath == False
 
-#cdp-config
-#Text colors options:
-#grey
-#red
-#green
-#yellow
-#blue
-#magenta
-#cyan
-#white
-
-#Text highlights options:
-#grey
-#red
-#green
-#yellow
-#blue
-#magenta
-#cyan
-#white
-
-#theme color
-textColor = "red"
-highLights = "white"
-
+#change the highlight string for the correct color syntax
 if highLights != "":
 	highLights = "on_"+highLights
 
@@ -135,32 +112,6 @@ if(len(sys.argv)>0):
 		debug = str(sys.argv[0])[:1]
 		if str(sys.argv[0])[:1] == "/":
 			initialpath = str(sys.argv[i]);
-
-	"""
-	if str(sys.argv[i]) == "-h":
-		print("Sorry the info page for cdp is currently not available, use the readme file instead.")
-		debug="Sorry the info page for cdp is currently not available, use the readme file instead."
-	if str(sys.argv[i]) == "-sh":
-		hide=False
-	if str(sys.argv[i]) == "-sc":
-		showContent=True
-	if str(sys.argv[i]) == "-edt":
-		if sys.argv[i+1] != "":
-			##custum text editor command
-			textEditor = str(sys.argv[i+1])
-		else:
-			##default text editor command
-			textEditor = nano
-	if str(sys.argv[i]) == "-sudo":
-		if sys.argv[i+1] != "":
-			##custum administrattor command
-			sudoMode=str(sys.argv[i+1])
-		else :
-			##default administrattor command
-			sudoMode="sudo"
-	"""
-
-
 
 #----------------------------------------------------------------------------------#
 	# PATH #
