@@ -29,27 +29,16 @@
 	alias cdp = python3 /home/"file-directory"/cdp.py
 	
 ## cdp-config options
-	Text colors options:
-	grey
-	red
-	green
-	yellow
-	blue
-	magenta
-	cyan
-	white
-
-Text highlights options:
-	grey
-	red
-	green
-	yellow
-	blue
-	magenta
-	cyan
-	white
-
-Config file not yet available
+	colors options:
+	*grey
+	*red
+	*green
+	*yellow
+	*blue
+	*magenta
+	*cyan
+	*white
+	Config file not yet available
 	
 ## Arguments
 	cdp /"directory-path"
