@@ -28,26 +28,26 @@
 	Add the following to your bashrc file to use more efficiently:
 	alias cdp = python3 /home/"file-directory"/cdp.py
 	
-##cdp-config options
-Text colors options:
-grey
-red
-green
-yellow
-blue
-magenta
-cyan
-white
+## cdp-config options
+	Text colors options:
+	grey
+	red
+	green
+	yellow
+	blue
+	magenta
+	cyan
+	white
 
 Text highlights options:
-grey
-red
-green
-yellow
-blue
-magenta
-cyan
-white
+	grey
+	red
+	green
+	yellow
+	blue
+	magenta
+	cyan
+	white
 
 Config file not yet available
 	
