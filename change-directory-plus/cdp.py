@@ -49,11 +49,10 @@ config.read(configFile)
 textColor="red"
 highLights="white"
 textEditor="$EDITOR"
-print(config.sections())
-exit()
-textColor = str(config['theme']['textColor'])
-highLights = config['theme']['highLights']
-textEditor = config['default']['textEditor']
+textColor = str(config["theme"]["textColor"])
+highLights = config["theme"]["highLights"]
+textEditor = config["default"]["textEditor"]
+
 #----------------------------------------------------------------------------------#
 	# VARIABLES #
 #----------------------------------------------------------------------------------#
