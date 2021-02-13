@@ -22,7 +22,6 @@
 	create directory = g
 	open images, videos, or any file type with the default gui = o
 	change directory index = i 
-	(All the keys will be mappable trough a file soon.)
 
 ## Tips
 	Add the following to your bashrc file to use more efficiently:
@@ -38,7 +37,6 @@ colors options:
 * magenta
 * cyan
 * white
-Config file not yet available
 	
 ## Arguments
 	cdp /"directory-path"
