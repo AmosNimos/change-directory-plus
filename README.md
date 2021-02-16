@@ -24,8 +24,11 @@
 	change directory index = i 
 
 ## Tips
-	Add the following to your bashrc file to use more efficiently:
-	alias cdp = python3 /home/"file-directory"/cdp.py
+	You can add the following to your bashrc file to start cdp with the cdp command:
+		"alias cdp = python3 /file-directory/cdp.py"
+	You can also type the following command to acces cdp from anywhere on your system:
+		"export PATH=$PATH:/file-directory/cdp.py"
+	
 	
 ## cdp-config options
 colors options:
