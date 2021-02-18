@@ -10,9 +10,9 @@ try:
 	import os
 	import sys
 	import signal
-	import getpass
 	#External library
 	from configparser import ConfigParser
+	import getpass
 	import numpy as np
 	import pyperclip
 	from termcolor import colored, cprint
@@ -32,6 +32,7 @@ except:
 		try:
 			print("Attempting to acquire missing dependency, please wait.")
 			os.system("pip3 install configparser")
+			os.system("pip3 install getpass")
 			os.system("pip3 install numpy")
 			os.system("pip3 install pyperclip")
 			os.system("pip3 install termcolor")
@@ -121,8 +122,8 @@ initialpath = ""
 #arg
 if(len(sys.argv)>0):
 	for i in range(len(sys.argv)):
-		debug = str(sys.argv[0])[:1]
-		if str(sys.argv[0])[:1] == "/":
+		if str(sys.argv[i])[:1] == "/":
+			print(str(sys.argv[i]))
 			initialpath = str(sys.argv[i]);
 
 #----------------------------------------------------------------------------------#
@@ -132,7 +133,7 @@ if(len(sys.argv)>0):
 #set the path to current working directory
 def initialStart(initialpath):
 	#path = os.path.dirname(os.path.realpath(__file__))
-	if(initialpath==str(__file__)):
+	if(initialpath==str(__file__) or initialpath==''):
 		initialpath = os.getcwd()
 	files = os.listdir(initialpath)
 	global grid
