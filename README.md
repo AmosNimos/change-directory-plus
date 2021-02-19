@@ -31,7 +31,7 @@
 	
 	
 	
-## cdp-config options
+## cdp.config options
 colors options:
 * grey
 * red
@@ -43,7 +43,10 @@ colors options:
 * white
 
 keys options:
-The * symbol represent the "Enter-key" in the cdp-config
+The * symbol represent the "Enter-key" in the cdp.config
+
+warning:
+keep the cdp.config in the same file as cdp.py
 
 ## Arguments
 	cdp /"directory-path"
