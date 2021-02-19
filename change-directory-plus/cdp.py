@@ -60,6 +60,9 @@ keys[2] = config["keys"]["createDirectory"]
 keys[3] = config["keys"]["Delete"]
 keys[4] = config["keys"]["searchName"]
 keys[5] = config["keys"]["changeName"]
+for x in range(len(keys)):
+	if keys[x] == "*":
+		keys[x] = '\n'
 
 #----------------------------------------------------------------------------------#
 	# VARIABLES #
@@ -499,12 +502,17 @@ while True:
 
 	#Enter the currently selected directory
 	if keypress == keys[0]:
+		choice = input("Close cdp? [N/y]: ")
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
 		if os.path.isdir(newPath):
 			os.system(sudoMode+"gnome-terminal --working-directory="+newPath)
+			if choice[0].lower()=="y":
+				os.kill(os.getppid(), signal.SIGHUP)
 		elif os.path.isdir(path):
 			os.system(sudoMode+"gnome-terminal --working-directory="+str(path))
+			if choice[0].lower()=="y":
+				os.kill(os.getppid(), signal.SIGHUP)
 		else:
 			debug = "I'm sorry "+str(userName)+", I can't open ["+oldPath+"]."
 			print(debug)
@@ -512,6 +520,7 @@ while True:
 
 	#Open with gui file manager (xdg)
 	if keypress == keys[1]:
+		print(keys[1])
 		#Enter the currently selected directory
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
