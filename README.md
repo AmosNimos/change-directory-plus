@@ -30,6 +30,7 @@
 		"export PATH=$PATH:/file-directory/cdp.py"
 	
 	
+	
 ## cdp-config options
 colors options:
 * grey
@@ -40,7 +41,10 @@ colors options:
 * magenta
 * cyan
 * white
-	
+
+keys options:
+The * symbol represent the "Enter-key" in the cdp-config
+
 ## Arguments
 	cdp /"directory-path"
 	
