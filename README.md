@@ -20,7 +20,7 @@
 	copy path to selection = u
 	create file = p
 	create directory = g
-	open images, videos, or any file type with the default gui = o
+	open images, videos, or any file type with the default gui = "Enter-key"
 	change directory index = i 
 
 ## Tips
