@@ -14,7 +14,7 @@
 	exit cdp = q
 	Search file by full name or by the first character = f
 	remove file = r
-	return to the home/user directory = c
+	return to the home/user directory = t
 	show/hide hidden directory = v
 	Rename files and directorys = y
 	copy path to selection = u
