@@ -7,6 +7,8 @@
 	Add the following lines to the .bashrc file. Replace both occurrences of nano with the editor you want to set as the default editor: 
 	export EDITOR='nano'
 	export VISUAL='nano'
+	Add the following line to the .bashrc file. Replace xfce4-terminal with the terminal-emulator you want to set as the default terminal-emulator: 
+	export TERM='xfce4-terminal'
 
 
 
