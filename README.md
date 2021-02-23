@@ -8,8 +8,8 @@
 	* manually add the following lines to the .bashrc file. Replace both occurrences of nano with the editor you want to set as the default editor: 
 		export EDITOR='nano'
 		export VISUAL='nano'
-		or type the following line to the terminal:
-			cd ~ &$ printf "export EDITOR='nano'\nexport VISUAL='nano'" >> .bashrc
+	or type the following line to the terminal:
+		cd ~ &$ printf "export EDITOR='nano'\nexport VISUAL='nano'" >> .bashrc
 	
 
 
