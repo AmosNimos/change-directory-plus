@@ -3,6 +3,13 @@
 ## Screenshot
 ![](cdp_screenshot/cdp_001.png)
 
+## Setup
+	Add the following lines to the .bashrc file. Replace both occurrences of nano with the editor you want to set as the default editor: 
+	export EDITOR='nano'
+	export VISUAL='nano'
+
+
+
 ## How to use
 	Move selection up = w
 	Move selection down = s
@@ -31,22 +38,23 @@
 	
 	
 	
+	
 ## cdp.config options
-colors options:
-* grey
-* red
-* green
-* yellow
-* blue
-* magenta
-* cyan
-* white
+	colors options:
+	* grey
+	* red
+	* green
+	* yellow
+	* blue
+	* magenta
+	* cyan
+	* white
 
-keys options:
-The * symbol represent the "Enter-key" in the cdp.config
+	keys options:
+	The * symbol represent the "Enter-key" in the cdp.config
 
-warning:
-keep the cdp.config in the same file as cdp.py
+	warning:
+	keep the cdp.config in the same file as cdp.py
 
 ## Arguments
 	cdp /"directory-path"
