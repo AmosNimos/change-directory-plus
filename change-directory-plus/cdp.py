@@ -51,9 +51,11 @@ textColor="red"
 highLights="white"
 marginX = "  "
 textEditor="$EDITOR"
+terminalEmulator="$TERM"
 textColor = str(config["theme"]["textColor"])
 highLights = config["theme"]["highLights"]
 textEditor = config["default"]["textEditor"]
+terminalEmulator = config["default"]["terminalEmulator"]
 keys= ['','','','','','','']
 keys[0] = config["keys"]["openSelection"]
 keys[1] = config["keys"]["openGui"]
@@ -536,11 +538,11 @@ while True:
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
 		if os.path.isdir(newPath):
-			os.system(sudoMode+textEditor+" --working-directory="+newPath)
+			os.system(sudoMode+str(terminalEmulator)+" --working-directory="+newPath)
 			if choice[0].lower()=="y":
 				os.kill(os.getppid(), signal.SIGHUP)
 		elif os.path.isdir(path):
-			os.system(sudoMode+textEditor+" --working-directory="+str(path))
+			os.system(sudoMode+str(terminalEmulator)+" --working-directory="+str(path))
 			if choice[0].lower()=="y":
 				os.kill(os.getppid(), signal.SIGHUP)
 		else:
