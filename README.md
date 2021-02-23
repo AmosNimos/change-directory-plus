@@ -11,6 +11,7 @@
 
 
 ## How to use
+	help = b
 	Move selection up = w
 	Move selection down = s
 	Move into selected directory/file = a
