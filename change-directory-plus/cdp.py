@@ -49,20 +49,47 @@ config = ConfigParser()
 config.read(configFile)
 textColor="red"
 highLights="white"
+marginX = "  "
 textEditor="$EDITOR"
 textColor = str(config["theme"]["textColor"])
 highLights = config["theme"]["highLights"]
 textEditor = config["default"]["textEditor"]
-keys= ['','','','','','']
+keys= ['','','','','','','']
 keys[0] = config["keys"]["openSelection"]
 keys[1] = config["keys"]["openGui"]
 keys[2] = config["keys"]["createDirectory"]
 keys[3] = config["keys"]["Delete"]
 keys[4] = config["keys"]["searchName"]
 keys[5] = config["keys"]["changeName"]
+keys[6] = config["keys"]["helpInfo"]
+
+helpText="The * symbol is used to represent the enter key.\n"
+helpText+="\n"+marginX+"+--- KEYS ---+\n"
+helpText+=marginX*2+"Open selection path in terminal, press: "+str(keys[0])+"\n"
+helpText+=marginX*2+"Open selection with gui default, press: "+str(keys[1])+"\n"
+helpText+=marginX*2+"Create a new directory, press: "+str(keys[2])+"\n"
+helpText+=marginX*2+"Delete, press: "+str(keys[3])+"\n"
+helpText+=marginX*2+"Search by name, press: "+str(keys[4])+"\n"
+helpText+=marginX*2+"Change name, press: "+str(keys[5])+"\n"
+helpText+="\n"+marginX+"+--- default ---+\n"
+helpText+=marginX*2+"Move selection up = w\n"
+helpText+=marginX*2+"Move selection down = s\n"
+helpText+=marginX*2+"Move into selected directory/file = a\n"
+helpText+=marginX*2+"Move out of current directory = d\n"
+helpText+=marginX*2+"(like in vim you can use hjkl keys to move)\n"
+helpText+=marginX*2+"Quit terminal = escape\n"
+helpText+=marginX*2+"exit cdp = q\n"
+helpText+=marginX*2+"home/user directory = t\n"
+helpText+=marginX*2+"show/hide hidden directory = v\n"
+helpText+=marginX*2+"copy path to selection = u\n"
+helpText+=marginX*2+"create file = p\n"
+helpText+=marginX*2+"change directory index = i"
+
+#replace * with newline
 for x in range(len(keys)):
 	if keys[x] == "*":
 		keys[x] = '\n'
+
 
 #----------------------------------------------------------------------------------#
 	# VARIABLES #
@@ -115,8 +142,6 @@ nameSizeLimit= 16
 #change the highlight string for the correct color syntax
 if highLights != "":
 	highLights = "on_"+highLights
-
-marginX = "  "
 
 initialpath = ""
 #----------------------------------------------------------------------------------#
@@ -384,6 +409,11 @@ while True:
 		pyperclip.copy(str(path)+"/"+str(grid[directorySelection]))
 		debug = "path copyed to clipboard"
 
+	if keypress == keys[6]:
+		os.system('clear')
+		debug=helpText;
+
+
 	#--------- creat empty file---------#
 	if keypress == 'p':
 		#Enter the currently selected directory
@@ -520,7 +550,6 @@ while True:
 
 	#Open with gui file manager (xdg)
 	if keypress == keys[1]:
-		print(keys[1])
 		#Enter the currently selected directory
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
@@ -594,7 +623,7 @@ while True:
 		editing(keypress)
 
 	#display debug text to the terminal
-	print(" "+debug)
+	print("\n"+marginX+debug)
 
 	#reset debug text to an empty string
 	debug=""
