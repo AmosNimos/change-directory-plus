@@ -10,6 +10,7 @@ try:
 	import os
 	import sys
 	import signal
+	import time
 	#External library
 	from configparser import ConfigParser
 	import getpass
@@ -534,7 +535,7 @@ while True:
 
 	#Enter the currently selected directory
 	if keypress == keys[0]:
-		choice = input("Close cdp? [N/y]: ")
+		choice = input("Do you also want to close cdp? [N/y]: ")
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
 		if os.path.isdir(newPath):
@@ -552,12 +553,17 @@ while True:
 
 	#Open with gui file manager (xdg)
 	if keypress == keys[1]:
+		choice = input("Do you also want to close cdp? [N/y]: ")
 		#Enter the currently selected directory
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
 		try:
-			os.system(sudoMode+" xdg-open " + newPath)
-			start()
+			os.system(sudoMode+"nohup xdg-open " + newPath +" &")
+			if choice[0].lower()=="y":
+				time.sleep(2)
+				os.kill(os.getppid(), signal.SIGHUP)
+			else:
+				start()
 		except:
 			debug = "I'm sorry "+str(userName)+", I can't open ["+oldPath+"]."
 			print(str(Exception))
