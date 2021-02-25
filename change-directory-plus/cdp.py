@@ -558,11 +558,12 @@ while True:
 		newPath=str(path)+"/"+str(grid[directorySelection])
 		oldPath=str(grid[directorySelection])
 		try:
-			os.system(sudoMode+"nohup xdg-open " + newPath +" &")
 			if choice[0].lower()=="y":
+				os.system(sudoMode+"nohup xdg-open " + newPath +" &")
 				time.sleep(2)
 				os.kill(os.getppid(), signal.SIGHUP)
 			else:
+				os.system(sudoMode+"xdg-open " + newPath)
 				start()
 		except:
 			debug = "I'm sorry "+str(userName)+", I can't open ["+oldPath+"]."
