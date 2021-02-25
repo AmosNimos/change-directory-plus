@@ -559,8 +559,13 @@ while True:
 		oldPath=str(grid[directorySelection])
 		try:
 			if choice[0].lower()=="y":
-				os.system(sudoMode+"nohup xdg-open " + newPath +" &")
-				time.sleep(2)
+				#use the nohup command if it's a video or audio file
+				#so that the file keep playing when the terminal is closed.
+				if newPath[-3:] in ["mp4","mkv","mp3","wav","ogg"]:
+					os.system(sudoMode+"nohup xdg-open " + newPath)
+					time.sleep(2)
+				else:
+					os.system(sudoMode+"xdg-open " + newPath)
 				os.kill(os.getppid(), signal.SIGHUP)
 			else:
 				os.system(sudoMode+"xdg-open " + newPath)
