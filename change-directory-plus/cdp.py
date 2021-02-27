@@ -52,10 +52,12 @@ textColor="red"
 highLights="white"
 marginX = "  "
 textEditor="$EDITOR"
+textVisual="$VISUAL"
 terminalEmulator="$TERM"
 textColor = str(config["theme"]["textColor"])
 highLights = config["theme"]["highLights"]
 textEditor = config["default"]["textEditor"]
+textEditor = config["default"]["textVisual"]
 terminalEmulator = config["default"]["terminalEmulator"]
 keys= ['','','','','','','']
 keys[0] = config["keys"]["openSelection"]
@@ -564,6 +566,8 @@ while True:
 				if newPath[-3:] in ["mp4","mkv","mp3","wav","ogg"]:
 					os.system(sudoMode+"nohup xdg-open " + newPath)
 					time.sleep(2)
+				elif newPath[-2:] in ["xt","py"]:
+					os.system(textVisual+" "+newPath)
 				else:
 					os.system(sudoMode+"xdg-open " + newPath)
 				os.kill(os.getppid(), signal.SIGHUP)
