@@ -3,6 +3,9 @@
 ## Screenshot
 ![](cdp_screenshot/cdp_001.png)
 
+The following repositorys might be more aproptiate for some cases:
+	https://github.com/AmosNimos/dcdp
+
 ## Setup
 	* update the terminal emulator in the cdp.config to be the same as your default.
 	* manually add the following lines to the .bashrc file. Replace both occurrences of nano with the editor you want to set as the default editor: 
