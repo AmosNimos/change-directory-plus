@@ -11,9 +11,9 @@ try:
 	import sys
 	import signal
 	import time
+	import getpass
 	#External library
 	from configparser import ConfigParser
-	import getpass
 	import numpy as np
 	import pyperclip
 	from termcolor import colored, cprint
@@ -33,7 +33,6 @@ except:
 		try:
 			print("Attempting to acquire missing dependency, please wait.")
 			os.system("pip3 install configparser")
-			os.system("pip3 install getpass")
 			os.system("pip3 install numpy")
 			os.system("pip3 install pyperclip")
 			os.system("pip3 install termcolor")
