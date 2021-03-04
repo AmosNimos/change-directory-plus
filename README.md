@@ -3,7 +3,7 @@
 ## Screenshot
 ![](cdp_screenshot/cdp_001.png)
 
-The following repositorys might be more aproptiate for some cases:
+The following repositories might be more appropriate in some cases:
 	https://github.com/AmosNimos/dcdp
 
 ## Setup
